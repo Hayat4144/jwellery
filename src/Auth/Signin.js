@@ -2,6 +2,10 @@ import React from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import {Store_Jwt_Succes} from '../Context/action/Token_Action'
+import jwtDecode from 'jwt-decode'
+import {User_info} from '../Context/action/User_info'
+
 
 export default function Signin() {
     const [email, setemail] = useState('')
@@ -18,6 +22,21 @@ export default function Signin() {
     }
 
     const dispatch = useDispatch() ;
+    
+    const decode_token = (token)=>{
+        try{
+          const  decoded_token = jwtDecode(token)
+            const {user_id,name,email}  = decoded_token;
+            console.log(user_id)
+            console.log(name)
+            const result = {'user_id':user_id,'name':name,'email':email}
+            console.log(result)
+            const l = dispatch({type:"User_info"})
+            console.log(l)
+        }catch(err){
+            console.log(err)
+        }
+    }
 
     const SigninFunc = async (e) => {
         await fetch('http://localhost:8000/api/token/signin/', {
@@ -33,12 +52,16 @@ export default function Signin() {
                 const result = await res.json();
                 console.log(result)
                 const messageShow = document.getElementById('message');
-                console.log(result[0])
+              //  console.log(result[0])
                 const Success = () => {
                     console.log('ok')
                     setemail('')
                     setpassword('')
+                    // call signin action reducer 
+                    decode_token(Object.values(result)[1])
                     dispatch({type:"SIGNIN"})
+                    // call Jwt_reducer to store the jwt token 
+                    dispatch(Store_Jwt_Succes(result)) ;
                     messageShow.classList.add('text-green-700')
                     messageShow.classList.add('bg-green-100')
                     messageShow.style.display = 'block'

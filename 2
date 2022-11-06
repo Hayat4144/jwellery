@@ -1,0 +1,14 @@
+const initialstate = {
+    token : [],
+}
+
+export const Jwt_reducer = (state=initialstate,action)=>{
+    switch(action.types){
+        case 'Store_Jwt_Succes':
+            return {
+                state: action.payload,
+            };
+        default:
+            return state ;
+    }
+}

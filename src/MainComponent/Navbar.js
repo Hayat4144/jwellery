@@ -3,9 +3,13 @@ import { useState } from 'react'
 import { BsCart3 } from 'react-icons/bs'
 import { FaUserCircle } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import Sign_in_reducer from '../Context/reducer/Sign_in_reducer'
 
 export default function Navbar() {
     const [isOpen, setisOpen] = useState(false)
+    const Islogdin = useSelector((state) => state.Sign_in_reducer.IsLogdin);
+    console.log(Islogdin)
     return (
         <nav className='flex items-center h-14 bg-white justify-between'>
             <div className='hamburger mx-3 md:order-2 md:hidden' onClick={() => {
@@ -55,7 +59,7 @@ export default function Navbar() {
                 {/* <div className='serch hidden md:block  border border-gray-200 py-[2px] rounded-[4px]'>
                     <input type={'text'} required className=" px-2 py-[4px] bg-inherit outline-none placeholder-gray-700 text-sm text-gray-700 border-none" placeholder='Search the website' />
                 </div> */}
-                <Link to='/V2/auth/sign_in' className='bg-slate-800 py-1 rounded-md text-center h-8 px-8 text-white cursor-pointer hover:bg-slate-900 outline-none hover:text-gray-200 hidden md:block' type="button">Sign in</Link>
+                {Islogdin ? <Link to='/V2/auth/sign_in' className='bg-slate-800 py-1 rounded-md text-center h-8 px-8 text-white cursor-pointer hover:bg-slate-900 outline-none hover:text-gray-200 hidden md:block' type="button">Sign in</Link>: ''}
                 <BsCart3 fontSize={'22px'} className='cursor-pointer outline-none hover:text-slate-500' /></div>
         </nav>
     )

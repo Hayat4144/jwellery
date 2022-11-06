@@ -2,7 +2,8 @@
 import React from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-
+import { useDispatch } from 'react-redux'
+import jwt from 'jwt-decode'
 export default function Signup() {
     const [full_name, setfull_name] = useState('')
     const [mobile_no, setmobile_no] = useState('')
@@ -12,7 +13,8 @@ export default function Signup() {
     const [messages, setmessage] = useState('')
     const [showPassword1,setshowpassword1] = useState(false)
     const [showPassword2,setshowpassword2] = useState(false)
-
+    const dispatch = useDispatch() 
+    // decode the token
     // Signin form 
     const SingupFunc = async () => {
         await fetch('http://localhost:8000/auth/api/signup', {
@@ -60,12 +62,12 @@ export default function Signup() {
     }
     return (
         <div className='container mx-auto mb-10'>
-            <div className='logo text-center mt-3 font-bold text-2xl mb-10'><h2>Taj Jwellery</h2></div>
+            <div className='mt-3 mb-10 text-2xl font-bold text-center logo'><h2>Taj Jwellery</h2></div>
 
             {/* forms */}
             <div className='forms lg:m-auto  sm:m-auto sm:w-[60%] lg:w-[35%] bg-white mx-4 border-2 border-gray-200 rounded-md md:m-auto md:w-[50%]'>
 
-                <div className='create-account mx-10 mt-3 font-bold text-2xl'>
+                <div className='mx-10 mt-3 text-2xl font-bold create-account'>
                     <h2>Create an account</h2>
                 </div>
                 <div id="message" className=' hidden messages text-center items-center py-2 w-[20em]  text-green-100 h-10 bg-green-300 mx-10 mt-3 rounded-md'>
@@ -107,7 +109,7 @@ export default function Signup() {
                         </div>
                     </div>
                     <div className='mx-10'>
-                        <label htmlFor='Password' className='font-bold  text-sm text-gray-700'>Re-enter Password</label>
+                        <label htmlFor='Password' className='text-sm font-bold text-gray-700'>Re-enter Password</label>
                         <div className='password my-2 border border-gray-200 py-[2px] rounded-[4px]'>
                             <input type={showPassword2 ? 'text' :'password'} required value={confirm_password} onChange={(e) => { setconfpassword(e.target.value) }} className=" px-2 py-[4px] bg-inherit outline-none placeholder-gray-700 
                         text-sm text-gray-700 border-none " placeholder='Re-enter your password' /><span className='text-sm cursor-pointer' onClick={(e)=>{

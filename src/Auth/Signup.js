@@ -10,6 +10,9 @@ export default function Signup() {
     const [password, setpassword] = useState('')
     const [confirm_password, setconfpassword] = useState('')
     const [messages, setmessage] = useState('')
+    const [showPassword1,setshowpassword1] = useState(false)
+    const [showPassword2,setshowpassword2] = useState(false)
+
     // Signin form 
     const SingupFunc = async () => {
         await fetch('http://localhost:8000/auth/api/signup', {
@@ -96,15 +99,20 @@ export default function Signup() {
                     <div className='mx-10'>
                         <label htmlFor='Password' className='text-sm font-bold text-gray-700'>Password</label>
                         <div className='password my-2 border border-gray-200 py-[2px] rounded-[4px]'>
-                            <input type={'password'} required value={password} onChange={(e) => { setpassword(e.target.value) }} className=" px-2 py-[4px] bg-inherit outline-none placeholder-gray-700 
+                            <input type={showPassword1 ? 'text' :'password'} required value={password} onChange={(e) => { setpassword(e.target.value) }} className=" px-2 py-[4px] bg-inherit outline-none placeholder-gray-700 
                         text-sm text-gray-700 border-none" placeholder='Enter your Password' />
+                        <span className='text-sm cursor-pointer' onClick={(e)=>{
+                                setshowpassword1(!showPassword1)
+                            }}>Show</span>
                         </div>
                     </div>
                     <div className='mx-10'>
                         <label htmlFor='Password' className='font-bold  text-sm text-gray-700'>Re-enter Password</label>
                         <div className='password my-2 border border-gray-200 py-[2px] rounded-[4px]'>
-                            <input type={'password'} required value={confirm_password} onChange={(e) => { setconfpassword(e.target.value) }} className=" px-2 py-[4px] bg-inherit outline-none placeholder-gray-700 
-                        text-sm text-gray-700 border-none " placeholder='Re-enter your password' />
+                            <input type={showPassword2 ? 'text' :'password'} required value={confirm_password} onChange={(e) => { setconfpassword(e.target.value) }} className=" px-2 py-[4px] bg-inherit outline-none placeholder-gray-700 
+                        text-sm text-gray-700 border-none " placeholder='Re-enter your password' /><span className='text-sm cursor-pointer' onClick={(e)=>{
+                            setshowpassword2(!showPassword2)
+                        }}>Show</span>
                         </div>
                     </div>
                     <div className='mx-10 W-[20em]'>

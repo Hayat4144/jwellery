@@ -1,12 +1,13 @@
 import React from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-
+import { useDispatch } from 'react-redux'
 
 export default function Signin() {
     const [email, setemail] = useState('')
     const [password, setpassword] = useState('')
     const [message, setmessage] = useState('')
+    const [showPassword,setshowpassword]  = useState(false)
 
     const EmailChange = (e) => {
         setemail(e.target.value)
@@ -15,6 +16,8 @@ export default function Signin() {
     const PasswordChange = (e) => {
         setpassword(e.target.value)
     }
+
+    const dispatch = useDispatch() ;
 
     const SigninFunc = async (e) => {
         await fetch('http://localhost:8000/api/token/signin/', {
@@ -35,6 +38,7 @@ export default function Signin() {
                     console.log('ok')
                     setemail('')
                     setpassword('')
+                    dispatch({type:"SIGNIN"})
                     messageShow.classList.add('text-green-700')
                     messageShow.classList.add('bg-green-100')
                     messageShow.style.display = 'block'
@@ -94,7 +98,10 @@ export default function Signin() {
                     <div className='mx-4 mb-8 password-field'>
                         <label htmlFor='password-input' className='text-sm font-medium text-gray-700'>password</label>
                         <div className='email-input border border-light-white    rounded-md my-2 py-[2px]'>
-                            <input type={'password'} value={password} onChange={PasswordChange} placeholder="Enter you password" required className='bg-inherit w-[18.8em] px-2 py-[4px] outline-none text-sm text-gray-700 border-none' />
+                            <input type={showPassword ? 'text' :'password'} value={password} onChange={PasswordChange} placeholder="Enter you password" required className='bg-inherit w-[22em] px-2 py-[4px] outline-none text-sm text-gray-700 border-none' />
+                            <span className='text-sm cursor-pointer' onClick={(e)=>{
+                                setshowpassword(!showPassword)
+                            }}>Show</span>
                         </div>
 
                         <div className='float-right mb-4 forget-password'>

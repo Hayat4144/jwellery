@@ -2,16 +2,16 @@ import React from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import {Store_Jwt_Succes} from '../Context/action/Token_Action'
+import { Store_Jwt_Succes } from '../Context/action/Token_Action'
 import jwtDecode from 'jwt-decode'
-import {User_info} from '../Context/action/User_info'
+import { User_Details } from '../Context/action/User_Action'
 
 
 export default function Signin() {
     const [email, setemail] = useState('')
     const [password, setpassword] = useState('')
     const [message, setmessage] = useState('')
-    const [showPassword,setshowpassword]  = useState(false)
+    const [showPassword, setshowpassword] = useState(false)
 
     const EmailChange = (e) => {
         setemail(e.target.value)
@@ -21,19 +21,19 @@ export default function Signin() {
         setpassword(e.target.value)
     }
 
-    const dispatch = useDispatch() ;
-    
-    const decode_token = (token)=>{
-        try{
-          const  decoded_token = jwtDecode(token)
-            const {user_id,name,email}  = decoded_token;
-            console.log(user_id)
-            console.log(name)
-            const result = {'user_id':user_id,'name':name,'email':email}
-            console.log(result)
-            const l = dispatch({type:"User_info"})
+    const dispatch = useDispatch();
+
+    const decode_token = (token) => {
+        try {
+            const decoded_token = jwtDecode(token)
+            console.log(decoded_token)
+            delete decoded_token['token_type']
+            delete decoded_token['exp']
+            delete decoded_token['iat']
+            delete decoded_token['jti']
+            const l = dispatch(User_Details(decoded_token))
             console.log(l)
-        }catch(err){
+        } catch (err) {
             console.log(err)
         }
     }
@@ -52,16 +52,16 @@ export default function Signin() {
                 const result = await res.json();
                 console.log(result)
                 const messageShow = document.getElementById('message');
-              //  console.log(result[0])
+                //  console.log(result[0])
                 const Success = () => {
                     console.log('ok')
                     setemail('')
                     setpassword('')
                     // call signin action reducer 
                     decode_token(Object.values(result)[1])
-                    dispatch({type:"SIGNIN"})
+                    dispatch({ type: "SIGNIN" })
                     // call Jwt_reducer to store the jwt token 
-                    dispatch(Store_Jwt_Succes(result)) ;
+                    dispatch(Store_Jwt_Succes(result));
                     messageShow.classList.add('text-green-700')
                     messageShow.classList.add('bg-green-100')
                     messageShow.style.display = 'block'
@@ -104,7 +104,7 @@ export default function Signin() {
                 e.preventDefault();
                 SigninFunc()
             }}>
-                <div className='sm:mx-auto sm:w-[50%]  xl:mx-auto xl:w-[30%]  lg:mx-auto lg:w-[40%] signin-form border md:w-[50%] md:m-auto border-light-white rounded-md bg-white mx-10 mb-7'>
+                <div className='sm:mx-auto sm:w-[50%]  xl:mx-auto xl:w-[30%]  lg:mx-auto lg:w-[40%] signin-form border md:w-[50%] md:m-auto border-light-white rounded-md bg-white mx-8 mb-6'>
 
                     <div id="message" className='hidden messages text-center items-center py-2 w-[22em] h-10  mx-4  text-sm mt-3 rounded-lg'>
                         {message}</div>
@@ -120,11 +120,11 @@ export default function Signin() {
                     {/* password field */}
                     <div className='mx-4 mb-8 password-field'>
                         <label htmlFor='password-input' className='text-sm font-medium text-gray-700'>password</label>
-                        <div className='email-input border border-light-white    rounded-md my-2 py-[2px]'>
-                            <input type={showPassword ? 'text' :'password'} value={password} onChange={PasswordChange} placeholder="Enter you password" required className='bg-inherit w-[22em] px-2 py-[4px] outline-none text-sm text-gray-700 border-none' />
-                            <span className='text-sm cursor-pointer' onClick={(e)=>{
+                        <div className='email-input border  justify-center border-light-white flex items-center  rounded-md my-2 py-[2px]'>
+                            <input type={showPassword ? 'text' : 'password'} value={password} onChange={PasswordChange} placeholder="Enter you password" required className='bg-inherit w-[18em] px-2 py-[4px] outline-none text-sm text-gray-700 border-none' />
+                            <span className='text-sm mr-1 cursor-pointer' onClick={(e) => {
                                 setshowpassword(!showPassword)
-                            }}>Show</span>
+                            }}>{showPassword ? ' hide' : 'show'}</span>
                         </div>
 
                         <div className='float-right mb-4 forget-password'>

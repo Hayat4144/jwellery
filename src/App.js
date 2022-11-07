@@ -4,7 +4,7 @@ import Signup from "./Auth/Signup";
 import Signin from "./Auth/Signin";
 import Navbar from "./MainComponent/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Password_change from './UserSettings/Password_change';
+import Password_change from './settings/Password_change';
 function App() {
   return (
     <div className='app'>

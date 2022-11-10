@@ -66,7 +66,7 @@ export default function Signup() {
             <div className='mt-3 mb-10 text-2xl font-bold text-center logo'><h2>Taj Jwellery</h2></div>
 
             {/* forms */}
-            <div className='forms lg:m-auto  sm:m-auto sm:w-[60%] lg:w-[35%] bg-white mx-8 border-2 border-gray-200 rounded-md md:m-auto md:w-[50%]'>
+            <div className='forms lg:m-auto  sm:m-auto sm:w-[60%] lg:w-[28%] bg-white mx-8 border-2 border-gray-200 rounded-md md:m-auto md:w-[50%]'>
 
                 <div className='mx-5 mt-3 text-2xl font-bold create-account'>
                     <h2>Create an account</h2>
@@ -137,7 +137,7 @@ export default function Signup() {
                 </form>
 
 
-                <div className='mx-5 w-[20em] mb-4'>
+                <div className='mx-5 w-[20em] mb-4 break-words'>
                     <span className='text-xs'>By creating an account, you agree to Taj's <a className='text-blue-700 underline hover:text-[15px] cursor-pointer'>Conditions</a> of Use and Privacy Notice. </span>
                 </div>
                 <div className='mx-5 mb-5'>

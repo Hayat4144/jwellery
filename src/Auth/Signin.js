@@ -104,7 +104,7 @@ export default function Signin() {
                 e.preventDefault();
                 SigninFunc()
             }}>
-                <div className='sm:mx-auto sm:w-[50%]  xl:mx-auto xl:w-[30%]  lg:mx-auto lg:w-[40%] signin-form border md:w-[50%] md:m-auto border-light-white rounded-md bg-white mx-8 mb-6'>
+                <div className='sm:mx-auto sm:w-[50%]  xl:mx-auto xl:w-[25%]  lg:mx-auto lg:w-[30%] signin-form border md:w-[50%] md:m-auto border-light-white rounded-md bg-white mx-8 mb-6'>
 
                     <div id="message" className='hidden messages text-center items-center py-2 w-[22em] h-10  mx-4  text-sm mt-3 rounded-lg'>
                         {message}</div>
@@ -120,7 +120,7 @@ export default function Signin() {
                     {/* password field */}
                     <div className='mx-4 mb-8 password-field'>
                         <label htmlFor='password-input' className='text-sm font-medium text-gray-700'>password</label>
-                        <div className='email-input border  justify-center border-light-white flex items-center  rounded-md my-2 py-[2px]'>
+                        <div className='password-input border justify-between border-light-white flex items-center  rounded-md my-2 py-[2px]'>
                             <input type={showPassword ? 'text' : 'password'} value={password} onChange={PasswordChange} placeholder="Enter you password" required className='bg-inherit w-[18em] px-2 py-[4px] outline-none text-sm text-gray-700 border-none' />
                             <span className='text-sm mr-1 cursor-pointer' onClick={(e) => {
                                 setshowpassword(!showPassword)
@@ -138,7 +138,7 @@ export default function Signin() {
                 </div>
             </form>
 
-            <div className='create_new_account sm:mx-auto sm:w-[72%] md:m-auto md:w-[60%] xl: mx-auto xl:w-[35%] lg:m-auto  lg:w-[48%] text-center'>
+            <div className='create_new_account sm:mx-auto sm:w-[60%] md:m-auto md:w-[60%] xl:mx-auto xl:w-[30%] lg:m-auto  lg:w-[38%] text-center'>
                 <div className='m-10 border-b border-b-light-white'>
                     <span className='text-sm  dont-account-text  text-[#767676]'>Don't have an account ?</span>
                 </div>

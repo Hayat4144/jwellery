@@ -1,5 +1,8 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
+.btn-primary{
+    @apply text-center rounded-md hover:bg-indigo-700 cursor-pointer bg-indigo-800 text-white 
+}

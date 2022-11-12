@@ -12,17 +12,17 @@ export default function Navbar() {
     const user_name = useSelector((state)=> state.User_Details_reducer.details.name);
     console.log(user_name)
     return (
-        <nav className='flex items-center justify-between bg-white h-14'>
+        <nav className='flex items-center justify-between bg-slate-800 text-white h-14'>
             <div className='mx-3 hamburger md:order-2 md:hidden' onClick={() => {
                 setisOpen(!isOpen)
             }}>
-                <div className={`w-5 m-1 h-[1px]  transform transition duration-500 ease-in-out ${isOpen ? ' translate-y-1 -rotate-45' : ''} bg-black`} ></div>
-                <div className={`w-5 m-1 h-[1px] bg-black transition duration-500 ease-in-out ${isOpen ? 'opacity-0' : ''}`}></div>
-                <div className={`w-5 m-1 h-[1px] bg-black transform transition duration-500 ease-in-out ${isOpen ? ' rotate-45 -translate-y-1.5' : ''}`}></div>
+                <div className={`w-5 m-1 h-[1px]  transform transition duration-500 ease-in-out ${isOpen ? ' translate-y-1 -rotate-45' : ''} bg-white`} ></div>
+                <div className={`w-5 m-1 h-[1px] bg-white transition duration-500 ease-in-out ${isOpen ? 'opacity-0' : ''}`}></div>
+                <div className={`w-5 m-1 h-[1px] bg-white transform transition duration-500 ease-in-out ${isOpen ? ' rotate-45 -translate-y-1.5' : ''}`}></div>
             </div>
 
             <div className='items-center logo md:order-1 lg:mx-20 md:mx-5 md:flex'>
-                <h2 className='text-black'>Taj Jwellery</h2>
+                <h2 className=''>Taj Jwellery</h2>
 
                 <ul className='hidden main-menu md:mx-10 lg:mx-20 md:visible md:flex space-x-5'>
                     <li className='text-sm cursor-pointer'>Home</li>
@@ -31,10 +31,10 @@ export default function Navbar() {
                     <li className='text-sm cursor-pointer '>Bali</li>
                 </ul>
 
-                <div className={`md:hidden ${!isOpen ? 'hidden' : 'visible'} text-black bg-white w-72 h-screen absolute top-6 left-0  bg:white my-8`}>
+                <div className={`md:hidden ${!isOpen ? 'hidden' : 'visible'} text-black bg-white z-10 w-72 h-screen absolute top-6 left-0  bg:white my-8`}>
 
-                    <ul className='h-12 py-2 mb-4 text-white auth-header bg-slate-800 md:hidden'>
-                        <div className='aut-text-link-&-avtar flex  font-bold items-center justify-around'><FaUserCircle fontSize={'28px'} className="cursor-pointer" /><span className='cursor-pointer'>Hello , {Islogdin? user_name: 'signin'}</span></div>
+                    <ul className='h-12 py-2 mb-4 mx-5  text-black auth-header items-center flex bg-white md:hidden'>
+                        <div className='aut-text-link-&-avtar flex  font-bold  '><FaUserCircle fontSize={'28px'} className="cursor-pointer" /><span className='capitalize cursor-pointer ml-10'>Hello , {Islogdin? user_name: 'signin'}</span></div>
                     </ul>
 
                     <ul className='main-menu md:flex'>
@@ -45,7 +45,7 @@ export default function Navbar() {
                         <li className='px-5 my-4 text-sm cursor-pointer '>Bali</li>
                     </ul>
 
-                    <ul className=' md:hidden text-black border-b-[1px]  border-gray-300 '>
+                    <ul className=' md:hidden text-black'>
                         <h2 className='mx-5 font-bold accounts-settings font-2xl'>Account and Settings</h2>
                         <li className='px-5 my-4 text-sm cursor-pointer'>Your Account</li>
                         <li className='px-5 my-4 text-sm cursor-pointer'>Settings</li>

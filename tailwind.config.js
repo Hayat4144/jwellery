@@ -4,14 +4,7 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}","./public/index.html"
   ],
   theme: {
-    extend: {
-      colors: {
-        'light-white': '#e7e7e7',
-      },
-    },
+    extend: {},
   },
   plugins: [],
-  // corePlugins:{
-  //   preflight:false,
-  // }
 }

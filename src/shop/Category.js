@@ -15,14 +15,15 @@ export default function Category() {
     return (
         <div className='category md:flex space md:space-x-7'>
             {
-                    categories.map((category_item) => (
-                        <div className='item' key={category_item.id}>
-                            <li className='category_name my-3 cursor-pointer'
-                                onClick={() => {
-                                }}>{category_item.name}</li>
-                        </div>
-                    ))
-                }
+                categories.map((category_item) => (
+                    <div className='item' key={category_item.id}>
+                        <li className='category_name my-3 list-none cursor-pointer'
+                            onClick={() => {
+                            }}>{category_item.name}</li>
+                    </div>
+                ))
+            }
+
         </div>
     )
 }

@@ -1,28 +1,33 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Fetch_Category } from '../Context/action/Category_Action'
 
 export default function Category(props) {
     const [categories, setcategories] = useState([])
     const dispatch = useDispatch()
+    const { Category_details } = useSelector(state => state.Fetch_Category_reducer)
     useEffect(() => {
         const getData = async () => {
             await fetch(`http://localhost:8000/product/api/get_all_categories`)
                 .then(async (res) => {
                     const data = await res.json();
-                    const l = dispatch(Fetch_Category(data))
-                    console.log(l)
-                    setcategories(data)
+                    dispatch(Fetch_Category(data))
                 })
         }
-        getData();
+
+        // call getData only when it is not in redux store
+        if (Category_details.length < 1) {
+            getData();
+        }
+
+
     }, [])
     return (
-        <div className='category flex mx-5 space-x-5 md:space-x-7'>
+        <div className={`category ${props.display} ${props.space} md:space-x-7`}>
             {
-                categories.map((category_item) => (
+                Category_details.map((category_item,) => (
                     <ul className='item' key={category_item.id}>
-                        <li className='category_name my-3 text-[18px]  hover:text-indigo-900 text-indigo-700 hover:underline list-none cursor-pointer'
+                        <li className={`category_name my-3 list-none cursor-pointer`}
                             onClick={() => {
                             }}>{category_item.name}</li>
                     </ul>

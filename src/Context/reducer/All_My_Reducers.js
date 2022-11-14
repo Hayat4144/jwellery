@@ -4,11 +4,14 @@ import storage from 'redux-persist/lib/storage';
 import {persistReducer} from 'redux-persist' ;
 import {Jwt_reducer} from './Jwt_reducer';
 import { User_Details_reducer } from "./User_Details_reducer";
+import { Fetch_Category_reducer } from "./Fetch_Category_reducer";
 
 const All_My_Reducres = combineReducers({
     Sign_in_reducer,
     Jwt_reducer,
     User_Details_reducer,
+    Fetch_Category_reducer
+
     
 })
 

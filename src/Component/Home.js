@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { Suspense } from 'react'
+import FeaturesProduct from '../shop/FeaturesProduct'
 
 function Home() {
   return (
-    <div>Home</div>
+    <div>
+      <FeaturesProduct />
+      
+    </div>
   )
 }
 

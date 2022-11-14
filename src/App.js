@@ -18,15 +18,15 @@ function App() {
       <Router>
         <Navbar />
         {/* <FetureSkeleton />  */}
-        <Suspense fallback={'loading....'}>
+        {/* <Suspense fallback={'loading....'}>
             <FeaturesProduct />
-        </Suspense>
+        </Suspense> */}
         <Routes>
           <Route path="/V2/auth/sign_up" element={<Signup />} />
           <Route path="/" element={<Home />} />
           <Route path="/V2/auth/sign_in" element={<Signin />} />
           <Route path='V2/settings/change/password' element={<Password_change />} />
-          <Route path='V2/Shop/proudct/page/' element={<ProductPage />} />
+          <Route path='V2/Shop/product/:product_id' element={<ProductPage />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
       </Router>

@@ -9,7 +9,7 @@ export default function FeaturesProduct() {
             <p className='text-sm text-justify proudct-demo md:text-center md:mx-32'>These products are in high demand by our customers. They love it . These are finished product and you can use at any ocassion ,party , festival and function. </p>
             <div className="flex md:text-2xl space-x-10 w-7/12 mx-auto">
             </div>
-            <Category />
+            <Category display='flex' space='space-x-5' text='text-indigo-800' />
             <div className=''>
                 <Category_Product />
             </div>

@@ -1,8 +1,13 @@
 
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-.btn-primary{
-    @apply text-center rounded-md hover:bg-indigo-700 cursor-pointer bg-indigo-800 text-white 
-}
+@layer utilities {
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }

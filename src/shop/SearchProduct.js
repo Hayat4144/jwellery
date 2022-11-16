@@ -4,6 +4,7 @@ import { FiFilter } from 'react-icons/fi'
 import { AiOutlineClose } from 'react-icons/ai'
 import { BsPlus } from 'react-icons/bs'
 import { AiOutlineMinus } from 'react-icons/ai'
+import Footer from '../Component/Footer'
 
 export default function SearchProduct() {
   const [isSortOpen, setisSortOpen] = useState(false)
@@ -101,7 +102,7 @@ export default function SearchProduct() {
         </section>
 
         {/* for medium and large screen */}
-        <section className='filter&sort-medium-large-screen hidden md:block md:mx-5 lg:mx-14  md:my-5 md:w-[50%]'>
+        <section className='filter&sort-medium-large-screen  hidden md:block md:mx-5 lg:mx-14  md:my-5 md:w-[50%]'>
           <article className='sort rounded-md bg-white lg:w-[80%] '>
             <h3 className='flex  font-[500] justify-between items-center py-3 rounded-md mx-3 bg-white '>Sort By {isSortOpen ? <AiOutlineMinus className='mx-2' onClick={() => { setisSortOpen(!setisSortOpen) }} fontSize={'20px'} /> : <BsPlus onClick={() => { setisSortOpen(!isSortOpen) }} className='mx-2' fontSize={'22px'} />}</h3>
             <aside className={` ${isSortOpen ? 'visible' : 'hidden'} side-sort-menu z-2 bg-white px-5`}>
@@ -186,6 +187,11 @@ export default function SearchProduct() {
         <section className='product-show  md:absolute md:left-[33%] md:w-[65%] bg-white'>
           product
         </section>
+
+      </div>
+
+      <div className='footer'>
+        <Footer />
       </div>
     </Fragment>
   )

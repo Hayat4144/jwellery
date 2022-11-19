@@ -76,10 +76,10 @@ export default function Footer() {
         </div>
 
         {/* fourth row */}
-        <div className='row-3 lg:mr-14 lg:order-first mx-5 mt-10 lg:mt-0'>
-          <div className='follow-us mx-5 mb-5'>
+        <div className='row-3 lg:mr-14 lg:order-first mx-5 mt-10 lg:mt-0 mb-2'>
+          <div className='follow-us mx-5'>
             <div className='follow-us-head-text text-xl uppercase'>Follow us</div>
-            <ul className='ffollow-us-link text-[15px] my-3'>
+            <ul className='ffollow-us-link text-[15px] mt-3'>
               <li className='flex items-center hover:text-slate-500 cursor-pointer hover:translate-x-2'><AiOutlineDoubleRight />Instagram</li>
               <li className='flex items-center hover:text-slate-500 cursor-pointer hover:translate-x-2'><AiOutlineDoubleRight />printrest</li>
               <li className='flex items-center hover:text-slate-500 cursor-pointer hover:translate-x-2'><AiOutlineDoubleRight />Facebook</li>

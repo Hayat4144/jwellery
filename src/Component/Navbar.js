@@ -17,49 +17,47 @@ export default function Navbar() {
     const Islogdin = useSelector((state) => state.Sign_in_reducer.IsLogdin);
     const user_name = useSelector((state) => state.User_Details_reducer.details.name);
     return (
-        <nav className='flex items-center justify-between bg-slate-800  text-white h-14'>
+        <nav className='flex items-center bg-slate-800 justify-evenly text-white h-14'>
             {/* burger-menu for small device */}
-            <div className='mx-3 hamburger md:order-2 md:hidden' onClick={() => { setisOpen(!isOpen) }}>
+            <div className='mr-10 hamburger md:order-2 md:hidden' onClick={() => { setisOpen(!isOpen) }}>
                 <div className={`w-5 m-1 h-[1px]  transform transition duration-500 ease-in-out ${isOpen ? ' translate-y-1 -rotate-45' : ''} bg-white`} ></div>
                 <div className={`w-5 m-1 h-[1px] bg-white transition duration-500 ease-in-out ${isOpen ? 'opacity-0' : ''}`}></div>
                 <div className={`w-5 m-1 h-[1px] bg-white transform transition duration-500 ease-in-out ${isOpen ? ' rotate-45 -translate-y-1.5' : ''}`}></div>
             </div>
 
-            <div className='items-center logo md:order-1 md:flex md:ml-5'>
-                <h2 className='text-xl'>Jwellery</h2>
-                <ul className='hidden main-menu md:mx-10 md:visible md:items-center md:flex space-x-5'>
-                    <li className=' cursor-pointer'>Home</li>
-                    <li className=' cursor-pointer'>About</li>
-                    <li className=' cursor-pointer'>Contact</li>
-                </ul>
+            <div className='md:items-center mx-10 logo md:order-1 md:flex md:w-[63%]'>
+                <h2 className='text-xl mr-5'>Jwellery</h2>
+                <div className='sear-box md:flex md:items-center md:ml-10 md:w-full lg:w-[50%] lg:ml-44 hidden border border-slate-400 md:rounded-md py-1'>
+                    <input type={'search'} placeholder="Search the website..." className='md:w-[90%] bg-transparent outline-none pl-3' value={Search} onChange={(e) => {
+                        setSearch(e.target.value)
+                    }} /><BiSearch fontSize={'22px'} />
+                </div>
+
                 {/* side bar for small devices */}
                 <div className={`md:hidden ${!isOpen ? 'hidden' : 'visible'} text-black bg-white z-10 w-72 h-screen absolute top-6 left-0  bg:white my-8`}>
-
                     <ul className='h-12 py-2 mb-4 mx-5  text-black auth-header items-center flex bg-white md:hidden'>
                         <div className='aut-text-link-&-avtar flex  font-bold  '><FaUserCircle fontSize={'28px'} className="cursor-pointer" /><span className='capitalize cursor-pointer ml-10'>Hello , {Islogdin ? user_name : 'signin'}</span></div>
                     </ul>
-
                     <ul className='main-menu md:flex px-5 '>
                         <h2 className='font-bold accounts-settings font-2xl md:hidden'>Category</h2>
                         <Category />
                     </ul>
 
-                    <ul className=' md:hidden text-black py-3'>
+                    <ul className=' md:hidden text-black py-3 leading-3'>
                         <h2 className='mx-5 font-bold accounts-settings font-2xl'>Account and Settings</h2>
-                        <li className='px-5 my-4 text-sm cursor-pointer'>Your Account</li>
-                        <li className='px-5 my-4 text-sm cursor-pointer'>Settings</li>
+                        <li className='px-5 my-4 text-sm cursor-pointer'>My Account</li>
+                        <li className='px-5 my-4 text-sm cursor-pointer'>My order</li>
+                        <li className='px-5 my-4 text-sm cursor-pointer'>My Cart</li>
+                        <li className='px-5 my-4 text-sm cursor-pointer'>My whishlist</li>
+                        <li className='px-5 my-4 text-sm cursor-pointer'>My Settings</li>
+                        <li className='px-5 my-4 text-sm cursor-pointer'>Help</li>
                         <Link to="/V2/auth/sign_up" className='px-5 py-2 mx-4 my-4 text-sm text-center text-white bg-indigo-800 outline-none cursor-pointer w-30 rounded-md hover:bg-indigo-900'>Sign up</Link>
                         <Link to="/V2/auth/sign_in" className='px-5 py-2 mx-4 my-4 text-sm text-center text-white bg-indigo-800 outline-none cursor-pointer w-30 rounded-md hover:bg-indigo-900'>Sign in</Link>
                     </ul>
                 </div>
             </div>
 
-            <div className='mx-4 cart md:order-3 md:mr-2 md:items-center md:flex space-x-4'>
-                <div className='sear-box md:flex md:items-center hidden md:w-[55%] lg:visible border border-slate-400 md:rounded-md py-1'>
-                    <input type={'search'} placeholder="Search the website..." className='md:w-[90%] bg-transparent outline-none pl-3' value={Search} onChange={(e) => {
-                        setSearch(e.target.value)
-                    }} /><BiSearch fontSize={'22px'} />
-                </div>
+            <div className='cart md:order-3  md:items-center md:flex md:space-x-6'>
                 {/* accounts & list */}
                 <div className='accounts-whishlist hidden md:block'>
                     <span className={`signin text-[13px] ${Islogdin ? 'hidden' : 'block'}`}>Hello, Sign in</span>
@@ -97,7 +95,11 @@ export default function Navbar() {
 
                 </div>
                 {Islogdin ? <AiOutlineLogout fontSize={'28px'} className="hidden cursor-pointer md:block" /> : ''}
-                <BsCart3 fontSize={'25px'} className='outline-none cursor-pointer hover:text-slate-500' />
+                <div className='cart flex items-center space-x-1 '>
+                    <BsCart3 fontSize={'25px'} className='outline-none cursor-pointer hover:text-slate-500' />
+                    <span className='cart-text text-xl'>Cart</span>
+                </div>
+
             </div>
         </nav>
     )

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { AiFillStar } from 'react-icons/ai'
@@ -34,13 +34,12 @@ export default function Category_Product({ data }) {
 
 
   return (
-    <div className='mx-2'>
-      {/* card container */}
-      <div className='flex flex-wrap my-5 lg:ml-10 card-container'>
+    <Fragment>
+      <div className='flex flex-wrap my-5 lg:ml-10  card-container'>
         {!isLoading ? proudct_data.map((product_item) => (
           <div key={product_item.id} onClick={() => {
             navigate(`V2/Shop/product/${product_item.id}`)
-          }} className='mx-2  mb-4 bg-white rounded-lg shadow-lg cursor-pointer sm:w-[18em] sm:mx-auto md:w-[18em] lg:w-64 card w-[20em] '>
+          }} className='bg-white rounded-lg w-[9rem] mx-2 mb-5 shadow-lg cursor-pointer sm:w-[18em] sm:mx-auto md:w-[18em] lg:w-64 card '>
             <figure className='rounded-lg'>
               <LazyLoadImage
                 className='rounded-md h-[10em]'
@@ -54,19 +53,16 @@ export default function Category_Product({ data }) {
             </figure>
             <div className='mx-3 my-3 product-details'>
               <span className='block text-sm text-gray-700 product-name'>{product_item.name}</span>
-              <span className='text-sm flex my-3  break-words product-reviews text-yellow-500'><AiFillStar fontSize={'20px'} /><AiFillStar fontSize={'20px'} /><AiFillStar fontSize={'20px'} /><AiFillStar fontSize={'20px'} /></span>
-              <div className='add-cart-price justify-between items-center flex'>
-                <h3 className='price'><span className='price-symbol px-1'>Rs</span>{product_item.regular_price}</h3>
+              <div className='add-cart-price flex-wrap justify-between items-center flex'>
+                <h3 className='price pb-2'><span className='price-symbol'>Rs </span>{product_item.regular_price}</h3>
                 <button className='bg-indigo-800 hover:bg-indigo-900   rounded-md text-sm text-white px-2 h-9'>Add to cart</button>
               </div>
-
-
             </div>
           </div>
         )) : [1, 2, 3].map((loading) => (
           <FetureSkeleton key={loading} />
         ))}
       </div>
-    </div>
+    </Fragment>
   )
 }

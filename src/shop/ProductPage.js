@@ -4,6 +4,8 @@ import { BsArrowLeftCircle, BsArrowRightCircle } from 'react-icons/bs'
 import { useParams } from 'react-router-dom'
 import { BiPlus } from 'react-icons/bi'
 import { AiOutlineMinus } from 'react-icons/ai'
+import Footer from '../Component/Footer'
+import Navbar from '../Component/Navbar'
 
 export default function ProductPage() {
     const { product_id } = useParams();
@@ -39,6 +41,7 @@ export default function ProductPage() {
         })
             .then(async (res) => {
                 const result = await res.json()
+                console.log(result[0].colour_name)
                 setproductsdetails(result)
             })
     }
@@ -127,15 +130,17 @@ export default function ProductPage() {
         setquantity(Number(e.target.value))
     }
 
+    const [pink, setpink] = useState('pink')
     return (
         <Fragment>
-            <section className='proudct-parent  md:grid-cols-2 max-w-7xl grid grid-cols-1 lg:grid-cols-2 '>
+            <Navbar />
+            <section className='proudct-parent mx-auto lg:w-[90%] mt-5 mb-10 md:grid-cols-2 max-w-7xl grid grid-cols-1 lg:grid-cols-2 '>
                 {product_data.map((data) => (
-                    <article className='product-image-container lg:w-[30em] my-5 px-5 ' key={data.id}>
+                    <article className='product-image-container my-10 mx-5 lg:w-[70%]' key={data.id}>
                         {
                             Product_image.map((item, index) => (
-                                <figure className={`${slideindex === index + 1 ? 'relative' : 'hidden'} md:hidden`} key={item.id} >
-                                    <img alt='product-img' src={item.imagetumbnail} className=' max-w-[100%] w-full lg:w-[85em] rounded-2xl h-[20em] ' />
+                                <figure className={`${slideindex === index + 1 ? 'relative' : 'hidden'} md:hidden `} key={item.id} >
+                                    <img alt='product-img' src={item.imagetumbnail} className='w-full rounded-2xl h-[20em] lg:h-[38em] ' />
 
                                     {/* slider button */}
                                     <div className='md:hidden w-[90%] justify-between  absolute top-40 text-white font-bold text-2xl flex mx-2'>
@@ -177,80 +182,68 @@ export default function ProductPage() {
                 ))}
                 {
                     product_data.map((data) => (
-                        <article className='proudct-info my-5 lg:w-[42em] px-5 lg:absolute lg:right-32' key={data.id}>
+                        <article className='proudct-info mx-5 lg:absolute lg:top-[20%] lg:w-[45%] lg:left-[40%]' key={data.id}>
                             {/* proudct-price and name */}
-                            <div className='prouduct-name-price text-3xl font-semibold '>
-                                <h3 className='Proudct-name capitalize lg:text-4xl '>{data.name}</h3>
-                                <span className='text-indigo-800  hover:text-indigo-700 text-[15px] lg:text-xl'>Special price</span>
-                                <h5 className='product-price font-[500]'>Rs {data.regular_price}<span className='discount-price mx-3 text-xl text-slate-500 line-through font-[300]'>8903</span>
-                                    <span className='text-indigo-700 text-[20px]'> 45 % off</span></h5>
+                            <div className='prouduct-name-price font-semibold '>
+                                <h3 className='Proudct-name capitalize lg:text-4xl text-xl'>{data.name}</h3>
+                                <span className='text-indigo-800  hover:text-indigo-700 text-sm'>Special price</span>
+                                <h5 className='product-price font-[800] text-2xl'>Rs {data.regular_price}<span className='discount-price mx-3 text-sm text-slate-600 line-through font-[600]'>8903</span>
+                                    <span className='text-indigo-700 text-sm'> 45 % off</span></h5>
+                                <p className='product-description text-sm text-gray-800 pb-4'>
+                                    {data.descriptions}
+                                </p>
                             </div>
-                            {/* product-reviews */}
-                            {/* <div className='proudct-reviews flex my-2 items-center justify-between'>
-                                <div className='review-icons flex'>
-                                    {[1, 2, 3, 4].map((review) => (
-                                        <AiFillStar fontSize={'20px'} key={review} className="text-yellow-500" />
-                                    ))}
-                                </div>
-                                <span className='preview-all-reviews text-indigo-800'> See all 52 reviews</span>
-                            </div> */}
 
+                            <div className='colour flex items-center space-x-5 mb-5'>
+                                <h2 className='colour-text text-xl font-medium'>Colour</h2>
+                                <ul className='colour-value flex items-center   space-x-3'>
+                                    {
+                                        product_details.map((item, index) => (
+                                            <li key={item.id}>
+                                                <button className='border focus:bg-indigo-700 focus:border-none focus:shadow-lg focus:outline-none focus:text-white hover:text-white hover:border-none border-indigo-900 rounded-md px-5 py-2 hover:bg-indigo-700 text-center'>{item.colour_name}</button>
+                                            </li>
+                                        ))
+                                    }
+                                </ul>
+                            </div>
 
                             {/* product-size */}
-                            <div className='product-size'>
-                                <h2 className='text-size'>size</h2>
+                            <div className='product-size flex items-center space-x-10'>
+                                <h2 className='text-size text-xl font-medium'>Size</h2>
                                 <ul className='size-value flex space-x-3'>
                                     {
                                         product_details.map((item, index) => (
-                                            <li className='bg-indigo-800 text-white rounded-md px-3 h-7 hover:bg-indigo-700 text-center'>{item.size_name}</li>
+                                            <li key={item.id}><button className='border focus:bg-indigo-700 focus:border-none focus:shadow-lg focus:outline-none focus:text-white hover:text-white hover:border-none border-indigo-900 rounded-md px-3 py-2 hover:bg-indigo-700 text-center'>{item.size_name}</button></li>
                                         ))
                                     }
                                 </ul>
                             </div>
 
                             {/* Quantity */}
-                            <div className='product-quantity my-2'>
-                                <h2 className='text-quantity'>Quantity</h2>
-                                <div className='quanity-value flex lg:mx-0  items-center space-x-2'>
-                                    <button className='decrease-btn' disabled={quanity == 10 || quanity < 10 ? true : false}><AiOutlineMinus fontSize={'22px'} color={'black'} onClick={DicreaseQuantity} /></button>
-                                    <input type={'text'} className='w-10 border border-gray-300 outline-none bg-transparent text-black px-1 text-center' value={quanity} onChange={(e) => {
+                            <div className='product-quantity my-4 lg:w-[55%]'>
+                                <div className='quanity-value flex lg:mx-0 bg-gray-200 py-1 rounded-md items-center lg:justify-between space-x-24 lg:space-x-20 px-5'>
+                                    <button className='decrease-btn bg-indigo-900 text-white rounded-full igo-700 focus:border-none' disabled={quanity == 10 || quanity < 10 ? true : false}><AiOutlineMinus fontSize={'20px'} onClick={DicreaseQuantity} /></button>
+                                    <input type={'text'} className='focus:outline-none focus:border focus:border-indigo-600 focus:shadow-lg focus:bg-indigo-700 focus:text-white w-10 border rounded-md border-indigo-800 outline-none bg-transparent text-black  text-center' value={quanity} onChange={(e) => {
                                         e.preventDefault();
                                         ManualQuantityChange(e);
-                                    }} />  <BiPlus fontSize={'22px'} color={'black'} onClick={IncreaseQuantity} /> <span id='quantity-limit' className={`text-sm ${quanity < 10 ? 'block' : 'hidden'} text-red-800 mx-2`}>You should have to buy at least 10 pcs.</span>
+                                    }} />
+                                    <button className='plus-icon bg-indigo-900 focus:outline-none focus:shadow-lg focus:bg-indigo-700 focus:border-none text-white rounded-full '>
+                                        <BiPlus fontSize={'20px'} onClick={IncreaseQuantity} />
+                                    </button>
 
                                 </div>
+                                <span id='quantity-limit' className={`text-sm text-red-700 ${quanity < 10 ? 'block' : 'hidden'}`}>You should have to buy at least 10 pcs.</span>
                             </div>
 
-                            {/* button group */}
-                            <div className='shop-button-group space-x-5 my-10'>
-                                <a className='bg-gray-800 hover:bg-gray-900 text-white rounded-md h-8 shadow-md px-5 py-3 outline-none' href='/'>Buy Now</a>
-                                <a className='border border-gray-300 px-4 py-3 hover:border-none outline-none shadow-md  hover:text-white hover:bg-indigo-800 text-slate-800 rounded-md' href='/'>Add to Cart</a>
+                            <div className='group-btn lg:flex lg:items-center'>
+                                <button className='focus:outline-none focus:shadow-lg w-full lg:w-[9.5rem] lg:py-3 lg:mr-3 bg-slate-800 text-white px-3 rounded-lg  hover:bg-slate-900 cursor-pointer py-2'>Buy Now</button>
+                                <button className='focus:outline-none focus:shadow-lg w-full lg:w-[9.5rem] lg:py-3  my-2 bg-indigo-900 text-white px-3 rounded-lg  hover:bg-indigo-800 cursor-pointer py-2'> Add to Cart</button>
                             </div>
-
-                            {/* Description feature */}
-                            <div className='description border-b-[1px]  border-gray-300'>
-                                <h3 className='description-text text-slate-800 my-3'>Description</h3>
-                                <p className='text-sm text-justify text-slate-700'>The Basic tee is on hones new tak on a classic.The tee uses super soft,pre-shrunk cotton for true comfort and dependable fit . They are hand cut gives each tee it's own look. </p>
-                                <p className='text-sm text-justify text-slate-700 my-2'>The Basic tee is on hones new tak on a classic.The tee uses super soft,pre-shrunk cotton for true comfort and dependable fit .  </p>
-
-                            </div>
-
-                            {/* features */}
-
-                            <div className='my-3'>
-                                <h3 className='feature text-slate-800 md:w-[35em]'>Feature</h3>
-                                <ul className='list-disc  feature-list'>
-                                    <li className='text-sm mx-5 text-slate-800'>Only the best materials</li>
-                                    <li className='text-sm mx-5 text-slate-800'>Only the best materials</li>
-                                    <li className='text-sm mx-5 text-slate-800'>Only the best materials</li>
-                                    <li className='text-sm mx-5 text-slate-800'>Only the best materials</li>
-                                </ul>
-                            </div>
-
                         </article>
                     ))
                 }
             </section>
+            <Footer />
         </Fragment>
     )
 }

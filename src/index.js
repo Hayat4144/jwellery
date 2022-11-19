@@ -10,7 +10,10 @@ import PersistReducer from "./Context/reducer/All_My_Reducers";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-const store = createStore(PersistReducer);
+const store = createStore(
+  PersistReducer ,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  );
 let persistor = persistStore(store);
 
 root.render(

@@ -17,7 +17,7 @@ function Home() {
       <main className='h-full w-full px-5'>
         <FeaturesProduct />
       </main>
-      {/* <Footer /> */}
+      <Footer />
     </Fragment>
   )
 }

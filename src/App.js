@@ -7,7 +7,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NotFound from './Component/NotFound';
 import Home from './Component/Home'
 import ProductPage from './shop/ProductPage';
-import Category_Product from './shop/Category_Product';
 import SearchProduct from './shop/SearchProduct';
 const FeaturesProduct = React.lazy(() => import('./shop/FeaturesProduct'))
 
@@ -21,7 +20,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/V2/auth/sign_in" element={<Signin />} />
           <Route path='V2/Shop/product/:product_id' element={<ProductPage />} />
-          <Route path='V2/Shop/:category_name/products/' element={<Category_Product />} />
+          {/* <Route path='V2/Shop/:category_name/products/' element={<Category_Product />} /> */}
           <Route path='V2/Shop/q/:search' element={<SearchProduct />} />
           <Route path='*' element={<NotFound />} />
         </Routes>

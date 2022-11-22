@@ -111,12 +111,10 @@ export default function Signin() {
                     <div className='py-4 mx-4 email-field '>
                         <label htmlFor='email-input' className='text-sm font-medium text-gray-700'>Email</label>
                         <div className='email-input border border-gray-200 rounded-md my-2 py-[2px]'>
-                            <input type={'email'} placeholder="Enter you email" value={email} onChange={EmailChange} required className='bg-inherit w-[18.8em] px-2 py-[4px] outline-none text-sm text-gray-700 border-none' />
+                            <input type={'email'} placeholder="Enter you email" value={email} onChange={EmailChange} required className='active:border-indigo-600 bg-inherit focus:border w-[18.8em] px-2 py-[4px] outline-none text-sm text-gray-700 border-none' />
                         </div>
 
                     </div>
-
-
                     {/* password field */}
                     <div className='mx-4 mb-8 password-field'>
                         <label htmlFor='password-input' className='text-sm font-medium text-gray-700'>password</label>

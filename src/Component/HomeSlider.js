@@ -51,7 +51,7 @@ export default function HomeSlider() {
                     <img src={Product_image[slideindex].imagetumbnail} alt='pic' className='w-full h-80 lg:h-96' />
                 </figure>
                 {/* slider button */}
-                <div className='w-full px-5 justify-between  absolute top-52 text-white font-bold text-2xl flex'>
+                <div className='w-full px-5 justify-between relative bottom-48 text-white font-bold text-2xl flex'>
                     <h3 className='cursor-pointer' onClick={() => {
                         backslide();
                     }}><BsArrowLeftCircle /></h3>

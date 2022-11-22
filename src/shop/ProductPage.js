@@ -8,13 +8,36 @@ import Footer from '../Component/Footer'
 import Navbar from '../Component/Navbar'
 
 export default function ProductPage() {
+
+    const Product_image = [
+        {
+            "imagetumbnail": "/images/thumbnail-1.jpg",
+            "id": "1"
+        },
+        {
+            "imagetumbnail": "/images/thumbnail_2.jpg",
+            "id": "2"
+        },
+        {
+            "imagetumbnail": "/images/thumbnail_3.jpg",
+            "id": "3"
+        },
+        {
+            "imagetumbnail": "/images/thumbnail_4.jpg",
+            "id": "4"
+        },
+    ]
     const { product_id } = useParams();
     const [product_data, setproduct_data] = useState([])
     const [quanity, setquantity] = useState(10)
     const [product_details, setproductsdetails] = useState([])
-    const availablecolour = []
-    const availlabelsize = []
+    const [sizevalue, setsizevalue] = useState('')
+    const [colourvalue, setColourvalue] = useState('')
+    const [image_value, setimage_value] = useState(0)
+    const { imagetumbnail } = Product_image[image_value]
+    const [slideindex, setslidindex] = useState(1)
 
+    console.log(product_id)
 
     const get_product = async () => {
         await fetch(`http://localhost:8000/product/api/get_product/${product_id}/`, {
@@ -35,7 +58,7 @@ export default function ProductPage() {
 
 
     const Product_details = async () => {
-        await fetch(`http://localhost:8000/product/api/get_product/details/b116410f-68b4-4521-a1fa-f22609311d9f/`, {
+        await fetch(`http://localhost:8000/product/api/get_product/details/${product_id}/`, {
             method: 'GET',
 
         })
@@ -43,6 +66,7 @@ export default function ProductPage() {
                 const result = await res.json()
                 console.log(result[0].colour_name)
                 setproductsdetails(result)
+
             })
     }
     useEffect(() => {
@@ -51,51 +75,14 @@ export default function ProductPage() {
 
     }, [])
 
+    const ColourChange = (e) => {
+        setColourvalue(e.target.value)
 
+    }
+    const SizeChange = (e) => {
+        setsizevalue(e.target.value)
 
-
-    const Product_image = [
-        {
-            "imagetumbnail": "/images/thumbnail-1.jpg",
-            "id": "1"
-        },
-        {
-            "imagetumbnail": "/images/thumbnail_2.jpg",
-            "id": "2"
-        },
-        {
-            "imagetumbnail": "/images/thumbnail_3.jpg",
-            "id": "3"
-        },
-        {
-            "imagetumbnail": "/images/thumbnail_4.jpg",
-            "id": "4"
-        },
-    ]
-
-
-    const proudct_size = [
-        {
-            "nname": "M",
-            "id": "1"
-        },
-        {
-            "nname": "S",
-            "id": "2"
-        },
-        {
-            "nname": "L",
-            "id": "3"
-        },
-        {
-            "nname": "XL",
-            "id": "4"
-        },
-    ]
-
-    const [image_value, setimage_value] = useState(0)
-    const { imagetumbnail } = Product_image[image_value]
-    const [slideindex, setslidindex] = useState(1)
+    }
 
     // next slide
     const nextSlide = () => {
@@ -197,10 +184,12 @@ export default function ProductPage() {
                             <div className='colour flex items-center space-x-5 mb-5'>
                                 <h2 className='colour-text text-xl font-medium'>Colour</h2>
                                 <ul className='colour-value flex items-center   space-x-3'>
+                                   
                                     {
                                         product_details.map((item, index) => (
-                                            <li key={item.id}>
-                                                <button className='border focus:bg-indigo-700 focus:border-none focus:shadow-lg focus:outline-none focus:text-white hover:text-white hover:border-none border-indigo-900 rounded-md px-5 py-2 hover:bg-indigo-700 text-center'>{item.colour_name}</button>
+                                            <li key={item.id} className="radio-colour-btn">
+                                                <input type={'radio'} checked={colourvalue === item.colour_name} onChange={ColourChange} name='colour' id={item.colour_name} value={item.colour_name} />
+                                                <label htmlFor={item.colour_name} className="hover:bg-indigo-700 hover:text-white hover:border-none">{item.colour_name}</label>
                                             </li>
                                         ))
                                     }
@@ -213,7 +202,13 @@ export default function ProductPage() {
                                 <ul className='size-value flex space-x-3'>
                                     {
                                         product_details.map((item, index) => (
-                                            <li key={item.id}><button className='border focus:bg-indigo-700 focus:border-none focus:shadow-lg focus:outline-none focus:text-white hover:text-white hover:border-none border-indigo-900 rounded-md px-3 py-2 hover:bg-indigo-700 text-center'>{item.size_name}</button></li>
+                                            <li key={item.id} className='size-radio-btn'>
+                                                <input type={'radio'}
+                                                    name={'size'} checked={sizevalue === item.size_name} onChange={SizeChange} id={item.size_name} value={item.size_name} />
+                                                <label className='size-label checked:shadow-lg hover:bg-indigo-700 hover:text-white hover:border-none' htmlFor={item.size_name}>
+                                                    {item.size_name}
+                                                </label>
+                                            </li>
                                         ))
                                     }
                                 </ul>

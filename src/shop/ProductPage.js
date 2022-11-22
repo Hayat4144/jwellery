@@ -184,7 +184,7 @@ export default function ProductPage() {
                             <div className='colour flex items-center space-x-5 mb-5'>
                                 <h2 className='colour-text text-xl font-medium'>Colour</h2>
                                 <ul className='colour-value flex items-center   space-x-3'>
-                                   
+
                                     {
                                         product_details.map((item, index) => (
                                             <li key={item.id} className="radio-colour-btn">

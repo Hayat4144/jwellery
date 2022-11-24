@@ -4,4 +4,8 @@ export const SignIn_Action = ()=>{
     }
 }
 
-
+export const Logout_Action = ()=>{
+    return {
+        type:"LOGOUT"
+    }
+}

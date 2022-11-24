@@ -1,17 +1,18 @@
 import React from 'react'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link ,useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Store_Jwt_Succes } from '../Context/action/Token_Action'
 import jwtDecode from 'jwt-decode'
 import { User_Details } from '../Context/action/User_Action'
-
+import { IoIosCloseCircleOutline } from 'react-icons/io'
 
 export default function Signin() {
     const [email, setemail] = useState('')
     const [password, setpassword] = useState('')
     const [message, setmessage] = useState('')
     const [showPassword, setshowpassword] = useState(false)
+    const navigate = useNavigate()
 
     const EmailChange = (e) => {
         setemail(e.target.value)
@@ -31,8 +32,7 @@ export default function Signin() {
             delete decoded_token['exp']
             delete decoded_token['iat']
             delete decoded_token['jti']
-            const l = dispatch(User_Details(decoded_token))
-            console.log(l)
+            dispatch(User_Details(decoded_token))
         } catch (err) {
             console.log(err)
         }
@@ -50,11 +50,8 @@ export default function Signin() {
         })
             .then(async (res) => {
                 const result = await res.json();
-                console.log(result)
                 const messageShow = document.getElementById('message');
-                //  console.log(result[0])
                 const Success = () => {
-                    console.log('ok')
                     setemail('')
                     setpassword('')
                     // call signin action reducer 
@@ -62,27 +59,29 @@ export default function Signin() {
                     dispatch({ type: "SIGNIN" })
                     // call Jwt_reducer to store the jwt token 
                     dispatch(Store_Jwt_Succes(result));
+                    messageShow.style.display = 'visible'
+                    messageShow.style.display = 'flex'
                     messageShow.classList.add('text-green-700')
-                    messageShow.classList.add('bg-green-100')
-                    messageShow.style.display = 'block'
+                    messageShow.classList.add('bg-green-200')
                     setmessage("signin successfull.")
                     setTimeout(() => {
                         setmessage('')
                         messageShow.style.display = 'none'
                         messageShow.classList.remove('text-green-7000')
-                        messageShow.classList.remove('bg-green-100')
+                        messageShow.classList.remove('bg-green-200')
+                        navigate('/')
                     }, 3000)
                 }
                 const Error = () => {
-                    console.log('bad')
-                    setmessage(Object.values(result)[0])
-                    messageShow.style.display = 'block'
-                    messageShow.classList.add('bg-red-100')
+                    setmessage('Invalid Email/Password')
+                    messageShow.style.display = 'visible'
+                    messageShow.style.display = 'flex'
+                    messageShow.classList.add('bg-red-200')
                     messageShow.classList.add('text-red-700')
                     setTimeout(() => {
                         messageShow.style.display = 'none'
                         messageShow.classList.remove('text-red-700')
-                        messageShow.classList.remove('bg-red-100')
+                        messageShow.classList.remove('bg-red-200')
                     }, 3000)
                 }
 
@@ -94,21 +93,22 @@ export default function Signin() {
 
 
     return (
-        <div className='container mx-auto mb-10'>
-            <div className='mt-5 text-center header-text'>
-                <h2 className='text-2xl font-bold logo'>Taj Jwellery</h2>
-                <h3 className='px-5 my-4 text-2xl font-semibold'>Sign in to your account</h3>
+        <div className='container mx-auto'>
+            <div id="message" className=" md:w-[27%] hidden items-center space-x-3 py-3 my-4 mx-auto px-2 text-sm rounded-lg " role="alert">
+                <span className='w-full'>{message} </span><IoIosCloseCircleOutline className='text-[20px] cursor-pointer' />
             </div>
+            <div className='my-5 text-center header-text'>
+                <h2 className='text-2xl font-bold logo'>Taj Jwellery</h2>
+            </div>
+
             {/* input field */}
             <form onSubmit={(e) => {
                 e.preventDefault();
                 SigninFunc()
             }}>
-                <div className='sm:mx-auto sm:w-[50%]  xl:mx-auto xl:w-[25%]  lg:mx-auto lg:w-[30%] signin-form border md:w-[50%] md:m-auto border-light-white rounded-md bg-white mx-8 mb-6'>
-
-                    <div id="message" className='hidden messages text-center items-center py-2 w-[22em] h-10  mx-4  text-sm mt-3 rounded-lg'>
-                        {message}</div>
-                    <div className='py-4 mx-4 email-field '>
+                <div className='sm:mx-auto sm:w-[50%] mt-4 xl:mx-auto xl:w-[30%]  lg:mx-auto lg:w-[25%] signin-form border md:w-[50%] md:m-auto border-light-white rounded-md bg-white mx-3 mb-2'>
+                    <h3 className='mx-4 py-1 text-3xl'>Sign in</h3>
+                    <div className='mx-4 email-field '>
                         <label htmlFor='email-input' className='text-sm font-medium text-gray-700'>Email</label>
                         <div className='email-input border border-gray-200 rounded-md my-2 py-[2px]'>
                             <input type={'email'} placeholder="Enter you email" value={email} onChange={EmailChange} required className='active:border-indigo-600 bg-inherit focus:border w-[18.8em] px-2 py-[4px] outline-none text-sm text-gray-700 border-none' />

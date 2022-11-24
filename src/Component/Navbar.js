@@ -4,7 +4,7 @@ import { BsCart3 } from 'react-icons/bs'
 import { FaUserCircle } from 'react-icons/fa'
 import { AiOutlineLogout } from 'react-icons/ai'
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import Category from '../shop/Category'
 import { MdArrowDropDown } from 'react-icons/md'
 import { BiSearch } from 'react-icons/bi'
@@ -18,6 +18,16 @@ export default function Navbar() {
     const user_name = useSelector((state) => state.User_Details_reducer.details.name);
     const { productItems } = useSelector(state => state.Cart_reducer)
     console.log(productItems)
+
+    const dispatch = useDispatch();
+
+    // logout functionality
+    const LogoutFunc = () => {
+        dispatch({ type: 'LOGOUT' })
+        dispatch({ type: 'Clear_JWT_Token' })
+    }
+
+
     return (
         <nav className='flex items-center bg-slate-800 justify-around md:justify-between lg:justify-around text-white h-14'>
             {/* burger-menu for small device */}
@@ -65,7 +75,7 @@ export default function Navbar() {
             <div className='cart md:order-3 mr-5 md:items-center md:flex '>
                 {/* accounts & list */}
                 <div className='accounts-whishlist hidden md:block'>
-                    <span className={`signin text-[13px] ${Islogdin ? 'hidden' : 'block'}`}>Hello, Sign in</span>
+                    <span className={`signin text-[13px] translate-x-2 ${Islogdin ? 'hidden' : 'block'}`}>Hello, Sign in</span>
                     <h3 className={`text-[15px] ${!Islogdin ? 'translate -translate-y-1' : ''} font-bold md:flex lg:mx-2`} onMouseEnter={() => {
                         setisDropDownOpen(true)
                     }} onClick={() => {
@@ -101,7 +111,7 @@ export default function Navbar() {
                     {/* end of drop downlist */}
 
                 </div>
-                {Islogdin ? <div className='hiddden md:flex  items-center cursor-pointer hover:-translate-y-2 transition '> <AiOutlineLogout fontSize={'28px'} className="hidden cursor-pointer md:block" />
+                {Islogdin ? <div className='hiddden md:flex  items-center cursor-pointer hover:-translate-y-2 transition' onClick={() => LogoutFunc()}> <AiOutlineLogout fontSize={'28px'} className="hidden cursor-pointer md:block" />
                     <span className='hidden md:block'>Logout</span></div> : ''}
                 <div className='cart ml-5'>
                     <Link to="/V2/Shop/Cart" className='flex hover:-translate-y-2 transition'>

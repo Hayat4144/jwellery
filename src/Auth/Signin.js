@@ -12,6 +12,7 @@ export default function Signin() {
     const [password, setpassword] = useState('')
     const [message, setmessage] = useState('')
     const [showPassword, setshowpassword] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate()
 
     const EmailChange = (e) => {
@@ -39,6 +40,7 @@ export default function Signin() {
     }
 
     const SigninFunc = async (e) => {
+        setIsLoading(true)
         await fetch('http://localhost:8000/api/token/signin/', {
             method: "POST",
             headers: {
@@ -52,8 +54,7 @@ export default function Signin() {
                 const result = await res.json();
                 const messageShow = document.getElementById('message');
                 const Success = () => {
-                    setemail('')
-                    setpassword('')
+                    setIsLoading(false)
                     // call signin action reducer 
                     decode_token(Object.values(result)[1])
                     dispatch({ type: "SIGNIN" })
@@ -73,15 +74,17 @@ export default function Signin() {
                     }, 3000)
                 }
                 const Error = () => {
+                    setIsLoading(false)
                     setmessage('Invalid Email/Password')
                     messageShow.style.display = 'visible'
                     messageShow.style.display = 'flex'
                     messageShow.classList.add('bg-red-200')
                     messageShow.classList.add('text-red-700')
                     setTimeout(() => {
-                        messageShow.style.display = 'none'
                         messageShow.classList.remove('text-red-700')
                         messageShow.classList.remove('bg-red-200')
+                        messageShow.style.display = 'none'
+
                     }, 3000)
                 }
 
@@ -100,6 +103,9 @@ export default function Signin() {
             <div className='my-5 text-center header-text'>
                 <h2 className='text-2xl font-bold logo'>Taj Jwellery</h2>
             </div>
+            <div className='text-center page-text mb-5'>
+                <h3 className='mx-4 py-1 text-3xl mt-3 font-[1000]'>Sign in to your account</h3>
+            </div>
 
             {/* input field */}
             <form onSubmit={(e) => {
@@ -107,8 +113,8 @@ export default function Signin() {
                 SigninFunc()
             }}>
                 <div className='sm:mx-auto sm:w-[50%] mt-4 xl:mx-auto xl:w-[30%]  lg:mx-auto lg:w-[25%] signin-form border md:w-[50%] md:m-auto border-light-white rounded-md bg-white mx-3 mb-2'>
-                    <h3 className='mx-4 py-1 text-3xl'>Sign in</h3>
-                    <div className='mx-4 email-field '>
+
+                    <div className='mx-4 my-5 email-field '>
                         <label htmlFor='email-input' className='text-sm font-medium text-gray-700'>Email</label>
                         <div className='email-input border border-gray-200 rounded-md my-2 py-[2px]'>
                             <input type={'email'} placeholder="Enter you email" value={email} onChange={EmailChange} required className='active:border-indigo-600 bg-inherit focus:border w-[18.8em] px-2 py-[4px] outline-none text-sm text-gray-700 border-none' />
@@ -130,8 +136,15 @@ export default function Signin() {
                         </div>
                     </div>
 
-                    <div className='sumbit-btn mx-4 w-[20em]mb-5'>
-                        <button type='submit' className='w-full h-8 px-6 mb-8 text-center text-white outline-none text-bold bg-slate-800 rounded-md hover:bg-slate-900'>Sign in</button>
+                    <div className='sumbit-btn mx-2 lg:mx-4 W-[20em]'>
+                        {!isLoading ? <button type='submit' className='w-full h-8 px-6 mb-8 text-center text-white outline-none text-bold bg-indigo-800 rounded-md hover:bg-indigo-700'>Sign in</button> : <button type="button" className="inline-flex items-center justify-center py-2 mb-5 leading-4 text-sm shadow rounded-md text-white bg-indigo-800 hover:bg-indigo-900 w-full text-center transition ease-in-out duration-150 cursor-not-allowed" disabled="">
+                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle className="pacity-25 text-white" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Processing ...
+                        </button>
+                        }
                     </div>
                 </div>
             </form>

@@ -8,6 +8,10 @@ export const Jwt_reducer = (state=initialstate,action)=>{
             return {
                 ...state, token:action.payload,
             };
+        case "Clear_JWT_Token":
+            return {
+                ...state, token: []
+            }
         default:
             return state ;
     }

@@ -11,7 +11,7 @@ const Sign_in_reducer = (state = initialstate, action) => {
     switch (action.type) {
         case 'SIGNIN':
             return { ...state, IsLogdin: true, IsSuccess: true };
-        case 'IsLogout':
+        case 'LOGOUT':
             return { ...state, IsLogdin: false };
         default:
             return state;

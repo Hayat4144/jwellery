@@ -16,21 +16,26 @@ export default function Navbar() {
     const [Search, setSearch] = useState('')
     const Islogdin = useSelector((state) => state.Sign_in_reducer.IsLogdin);
     const user_name = useSelector((state) => state.User_Details_reducer.details.name);
+    const { productItems } = useSelector(state => state.Cart_reducer)
+    console.log(productItems)
     return (
-        <nav className='flex items-center bg-slate-800 justify-evenly text-white h-14'>
+        <nav className='flex items-center bg-slate-800 justify-around md:justify-between lg:justify-around text-white h-14'>
             {/* burger-menu for small device */}
-            <div className='mr-10 hamburger md:order-2 md:hidden' onClick={() => { setisOpen(!isOpen) }}>
+            <div className='ml-5 hamburger md:order-2 md:hidden' onClick={() => { setisOpen(!isOpen) }}>
                 <div className={`w-5 m-1 h-[1px]  transform transition duration-500 ease-in-out ${isOpen ? ' translate-y-1 -rotate-45' : ''} bg-white`} ></div>
                 <div className={`w-5 m-1 h-[1px] bg-white transition duration-500 ease-in-out ${isOpen ? 'opacity-0' : ''}`}></div>
                 <div className={`w-5 m-1 h-[1px] bg-white transform transition duration-500 ease-in-out ${isOpen ? ' rotate-45 -translate-y-1.5' : ''}`}></div>
             </div>
 
-            <div className='md:items-center mx-10 logo md:order-1 md:flex md:w-[63%]'>
-                <h2 className='text-xl mr-5'>Jwellery</h2>
-                <div className='sear-box md:flex md:items-center md:ml-10 md:w-full lg:w-[50%] lg:ml-44 hidden border border-slate-400 md:rounded-md py-1'>
-                    <input type={'search'} placeholder="Search the website..." className='md:w-[90%] bg-transparent outline-none pl-3' value={Search} onChange={(e) => {
+            <div className='md:items-center md:mx-5 mx-20  logo md:order-1 md:flex md:w-[57%]'>
+                <h2 className='text-xl'><Link to={'/'}>Jwellery</Link></h2>
+                <div className='sear-box md:flex md:items-center md:ml-10 bg-white md:w-full lg:w-[70%] lg:ml-44 hidden text-slate-700 md:rounded-md h-[35px]'>
+                    <input type={'search'} placeholder="Search the website..." className='w-full bg-transparent outline-none pl-3 placeholder:text-black' value={Search} onChange={(e) => {
                         setSearch(e.target.value)
-                    }} /><BiSearch fontSize={'22px'} />
+                    }} />
+                    <div className='bg-indigo-700 text-white  w-[40px] h-full search-bar'>
+                        <BiSearch className="translate-x-2 translate-y-2 text-[20px] hover:text-[22px] cursor-pointer" />
+                    </div>
                 </div>
 
                 {/* side bar for small devices */}
@@ -57,13 +62,15 @@ export default function Navbar() {
                 </div>
             </div>
 
-            <div className='cart md:order-3  md:items-center md:flex md:space-x-6'>
+            <div className='cart md:order-3 mr-5 md:items-center md:flex '>
                 {/* accounts & list */}
                 <div className='accounts-whishlist hidden md:block'>
                     <span className={`signin text-[13px] ${Islogdin ? 'hidden' : 'block'}`}>Hello, Sign in</span>
-                    <h3 className={`text-[15px] ${!Islogdin ? 'translate -translate-y-1' : ''} font-bold md:flex`} onMouseEnter={() => {
+                    <h3 className={`text-[15px] ${!Islogdin ? 'translate -translate-y-1' : ''} font-bold md:flex lg:mx-2`} onMouseEnter={() => {
                         setisDropDownOpen(true)
-                    }} >Accounts & List <MdArrowDropDown fontSize={'20px'} className="cursor-pointer translate-y-1" /> </h3>
+                    }} onClick={() => {
+                        setisDropDownOpen(!isDropDownOpen)
+                    }}>Accounts & List <MdArrowDropDown fontSize={'20px'} className="cursor-pointer translate-y-1" /> </h3>
 
                     {/* drop down list */}
                     <article className={`${isDropDownOpen ? 'md:block' : 'hidden'} z-20 absolute w-[25em] top-14 h-2/4 bg-white right-10`} onMouseLeave={() => { setisDropDownOpen(false) }}>
@@ -94,10 +101,13 @@ export default function Navbar() {
                     {/* end of drop downlist */}
 
                 </div>
-                {Islogdin ? <AiOutlineLogout fontSize={'28px'} className="hidden cursor-pointer md:block" /> : ''}
-                <div className='cart flex items-center space-x-1 '>
-                    <BsCart3 fontSize={'25px'} className='outline-none cursor-pointer hover:text-slate-500' />
-                    <span className='cart-text text-xl'>Cart</span>
+                {Islogdin ? <div className='hiddden md:flex  items-center cursor-pointer hover:-translate-y-2 transition '> <AiOutlineLogout fontSize={'28px'} className="hidden cursor-pointer md:block" />
+                    <span className='hidden md:block'>Logout</span></div> : ''}
+                <div className='cart ml-5'>
+                    <Link to="/V2/Shop/Cart" className='flex hover:-translate-y-2 transition'>
+                        <BsCart3 fontSize={'25px'} className='outline-none cursor-pointer ' />
+                        <span className='cart-text text-sm -translate-y-3'>{productItems.length}</span>
+                    </Link>
                 </div>
 
             </div>

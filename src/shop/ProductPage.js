@@ -6,9 +6,13 @@ import { BiPlus } from 'react-icons/bi'
 import { AiOutlineMinus } from 'react-icons/ai'
 import Footer from '../Component/Footer'
 import Navbar from '../Component/Navbar'
+import { useDispatch } from 'react-redux'
+import { ADD_TO_CART } from '../Context/action/CartActions'
+import { useSelector } from 'react-redux'
 
 export default function ProductPage() {
-
+    const data = useSelector(state => state.Cart_reducer)
+    // console.log(data)
     const Product_image = [
         {
             "imagetumbnail": "/images/thumbnail-1.jpg",
@@ -36,8 +40,8 @@ export default function ProductPage() {
     const [image_value, setimage_value] = useState(0)
     const { imagetumbnail } = Product_image[image_value]
     const [slideindex, setslidindex] = useState(1)
-
-    console.log(product_id)
+    const [product_item_id, setProduct_item_id] = useState('')
+    const dispatch = useDispatch();
 
     const get_product = async () => {
         await fetch(`http://localhost:8000/product/api/get_product/${product_id}/`, {
@@ -104,7 +108,6 @@ export default function ProductPage() {
         }
     }
 
-    // increase the quanity 
     const IncreaseQuantity = () => {
         setquantity(quanity + 1)
     }
@@ -117,7 +120,22 @@ export default function ProductPage() {
         setquantity(Number(e.target.value))
     }
 
-    const [pink, setpink] = useState('pink')
+    console.log(product_data)
+    const Add_TO_CART_FUNC = () => {
+        const item_data = {
+            'product_item_id': '27',
+            'product_image': Product_image[0].imagetumbnail,
+            'size': sizevalue,
+            'colour': colourvalue,
+            'quantity': quanity,
+            'product_name': product_data[0].name,
+            "price": product_data[0].regular_price
+
+        }
+        const l = dispatch(ADD_TO_CART(item_data))
+        console.log(l)
+    }
+
     return (
         <Fragment>
             <Navbar />
@@ -187,7 +205,9 @@ export default function ProductPage() {
 
                                     {
                                         product_details.map((item, index) => (
-                                            <li key={item.id} className="radio-colour-btn">
+                                            <li key={item.id} onClick={() => {
+                                                console.log(item.id)
+                                            }} className="radio-colour-btn">
                                                 <input type={'radio'} checked={colourvalue === item.colour_name} onChange={ColourChange} name='colour' id={item.colour_name} value={item.colour_name} />
                                                 <label htmlFor={item.colour_name} className="hover:bg-indigo-700 hover:text-white hover:border-none">{item.colour_name}</label>
                                             </li>
@@ -202,7 +222,9 @@ export default function ProductPage() {
                                 <ul className='size-value flex space-x-3'>
                                     {
                                         product_details.map((item, index) => (
-                                            <li key={item.id} className='size-radio-btn'>
+                                            <li key={item.id} onClick={() => {
+                                                console.log(item.id)
+                                            }} className='size-radio-btn'>
                                                 <input type={'radio'}
                                                     name={'size'} checked={sizevalue === item.size_name} onChange={SizeChange} id={item.size_name} value={item.size_name} />
                                                 <label className='size-label checked:shadow-lg hover:bg-indigo-700 hover:text-white hover:border-none' htmlFor={item.size_name}>
@@ -232,7 +254,7 @@ export default function ProductPage() {
 
                             <div className='group-btn lg:flex lg:items-center'>
                                 <button className='focus:outline-none focus:shadow-lg w-full lg:w-[9.5rem] lg:py-3 lg:mr-3 bg-slate-800 text-white px-3 rounded-lg  hover:bg-slate-900 cursor-pointer py-2'>Buy Now</button>
-                                <button className='focus:outline-none focus:shadow-lg w-full lg:w-[9.5rem] lg:py-3  my-2 bg-indigo-900 text-white px-3 rounded-lg  hover:bg-indigo-800 cursor-pointer py-2'> Add to Cart</button>
+                                <button onClick={Add_TO_CART_FUNC} className='focus:outline-none focus:shadow-lg w-full lg:w-[9.5rem] lg:py-3  my-2 bg-indigo-900 text-white px-3 rounded-lg  hover:bg-indigo-800 cursor-pointer py-2'> Add to Cart</button>
                             </div>
                         </article>
                     ))

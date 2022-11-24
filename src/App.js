@@ -8,6 +8,7 @@ import NotFound from './Component/NotFound';
 import Home from './Component/Home'
 import ProductPage from './shop/ProductPage';
 import SearchProduct from './shop/SearchProduct';
+import Cart from './shop/Cart';
 const FeaturesProduct = React.lazy(() => import('./shop/FeaturesProduct'))
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/V2/auth/sign_in" element={<Signin />} />
           <Route path='V2/Shop/product/:product_id' element={<ProductPage />} />
+          <Route path="/V2/Shop/Cart/" element={<Cart />} />
           {/* <Route path='V2/Shop/:category_name/products/' element={<Category_Product />} /> */}
           <Route path='V2/Shop/q/:search' element={<SearchProduct />} />
           <Route path='*' element={<NotFound />} />

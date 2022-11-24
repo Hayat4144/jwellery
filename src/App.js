@@ -9,6 +9,7 @@ import ProductPage from './shop/ProductPage';
 import SearchProduct from './shop/SearchProduct';
 import Cart from './shop/Cart';
 import UserSettings from './settings/MainSettings/UserSettings.';
+import ForgetPassword from './settings/User/ForgetPassword';
 
 const FeaturesProduct = React.lazy(() => import('./shop/FeaturesProduct'))
 
@@ -25,6 +26,7 @@ function App() {
           {/* <Route path='V2/Shop/:category_name/products/' element={<Category_Product />} /> */}
           <Route path='V2/Shop/q/:search' element={<SearchProduct />} />
           <Route path='/V2/settings' element={<UserSettings />} />
+          <Route path='/V2/user/forget/password/' element={<ForgetPassword />} />
           <Route path='*' element={<NotFound />} />
           
         </Routes>

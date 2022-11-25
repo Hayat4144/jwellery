@@ -46,7 +46,7 @@ export default function Category(props) {
                 {
                     categories.map((category_item,) => (
                         <ul className='item' key={category_item.id}>
-                            <li className={`category_name my-3 list-none cursor-pointer`}
+                            <li className={`category_name my-3 list-none hover:text-indigo-800 text-indigo-800 cursor-pointer`}
                                 onClick={() => {
                                     console.log('clicked')
                                     fetch_product(category_item.name)
@@ -56,38 +56,28 @@ export default function Category(props) {
                 }
 
             </div>
-
-            {/* category product */}
-            <div className='category-product'>
-                <div className='flex flex-wrap my-5 lg:ml-10  card-container'>
-                    {!isLoading ? proudct_data.map((product_item) => (
-                        <div key={product_item.id} onClick={() => {
-                            navigate(`V2/Shop/product/${product_item.id}`)
-                        }} className='bg-white rounded-lg w-[9rem] mx-2 mb-5 shadow-lg cursor-pointer sm:w-[18em] sm:mx-auto md:w-[18em] lg:w-64 card '>
-                            <figure className='rounded-lg'>
+            <section className='feature-product-category grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 sm:gap-5 mx-5 mb-24'>
+                {
+                    proudct_data.map((item) => (
+                        <main className='feature-product-main-container w-full cursor-pointer  mb-5 ' key={item.id} onClick={() => {
+                            navigate(`V2/Shop/product/${item.id}`)
+                        }}>
+                            <figure className='product-image-container shadow-lg rounded-lg my-5 overflow-hidden'>
                                 <img
-                                    className='rounded-md h-[10em]'
-                                    height={'10em'}
-                                    width={'100%'}
-                                    alt={'prodct-pic'}
-                                    effect="blur"
-                                    // placeholderSrc={`https://res.cloudinary.com/dwwequxd2/${product_item.image}`}
-                                    src={`https://res.cloudinary.com/dwwequxd2/${product_item.image}`}
-                                />
+                                    src={`https://res.cloudinary.com/dwwequxd2/${item.image}`}
+                                    className='rounded-lg object-cover object-center h-80 w-full hover:scale-125 transition ease-in-out duration-500 ' />
                             </figure>
-                            <div className='mx-3 my-3 product-details'>
-                                <span className='block text-[15px] product-name mb-2'>{product_item.name.length > 35 ? product_item.name.slice(0, 30) : product_item.name}{product_item.name.length > 35 ? '.....' : ''}</span>
-                                <div className='add-cart-price flex-wrap justify-between items-center flex'>
-                                    <h3 className='price'><span className='price-symbol'>Rs </span>{product_item.regular_price}</h3>
-                                    <button className='bg-indigo-800 hover:bg-indigo-900 rounded-md text-sm text-white px-2 h-9'>Add to cart</button>
+                            <article className='product-details'>
+                                <div className='product-name&price flex items-center justify-between'>
+                                    <h2 className='product-name text-xl sm:text-xl tracking-tight  font-bold capitalize leading-4 '>{item.name.length > 20 ? item.name.slice(0, 20) : item.name}{item.name.length > 20 ? '.....' : ''}</h2>
+                                    <h2 className='prouduct-price  leading-4 text-xl tracking-tight'> Rs {item.regular_price}</h2>
                                 </div>
-                            </div>
-                        </div>
-                    )) : [1, 2, 3].map((loading) => (
-                        <FetureSkeleton key={loading} />
-                    ))}
-                </div>
-            </div>
+                            </article>
+
+                        </main>
+                    ))
+                }
+            </section>
         </Fragment>
 
 

@@ -29,7 +29,7 @@ export default function Navbar() {
 
 
     return (
-        <nav className='flex items-center bg-slate-800 justify-around md:justify-between lg:justify-around text-white h-14'>
+        <nav className='flex items-center  bg-slate-800 justify-around md:justify-between lg:justify-around text-white h-14'>
             {/* burger-menu for small device */}
             <div className='ml-5 hamburger md:order-2 md:hidden' onClick={() => { setisOpen(!isOpen) }}>
                 <div className={`w-5 m-1 h-[1px]  transform transition duration-500 ease-in-out ${isOpen ? ' translate-y-1 -rotate-45' : ''} bg-white`} ></div>

@@ -126,7 +126,7 @@ export default function Signin() {
                     e.preventDefault();
                     SigninFunc()
                 }}>
-                    <div className='sm:mx-auto sm:w-[50%] mt-4 xl:mx-auto xl:w-[30%]  lg:mx-auto lg:w-[25%] signin-form border md:w-[50%] md:m-auto border-gray-300 shadow-lg rounded-md bg-white mx-3 mb-2'>
+                    <div className='sm:mx-auto sm:w-[50%] mt-4 xl:mx-auto xl:w-[30%]  lg:mx-auto lg:w-[25%] signin-form border md:w-[50%] md:m-auto border-gray-300 shadow-lg rounded-md  mx-3 mb-2'>
 
                         <div className='mx-4 my-5 email-field '>
                             <label htmlFor='email-input' className='text-sm font-medium text-gray-700'>Email</label>

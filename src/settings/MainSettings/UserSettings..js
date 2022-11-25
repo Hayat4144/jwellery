@@ -2,24 +2,27 @@ import React, { Fragment, useState, useEffect } from 'react'
 import Navbar from '../../Component/Navbar'
 import ShippingAddress from '../../shop/ShippingAddress'
 import ChangeEmail from '../User/ChangeEmail'
-import ChangePassword from '../User/ChangePassword'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import {Helmet} from 'react-helmet'
+import { Helmet } from 'react-helmet'
+import { IoIosCloseCircleOutline } from 'react-icons/io'
 
 export default function UserSettings() {
+  const [message, setmessage] = useState('')
   const [CloseMessagebox, setCloseMessagebox] = useState(true)
-  const [oldPassword, setoldPassword] = useState('')
-  const [newpassword, setnewpassword] = useState('')
-  const [confirmpassowrd, setconfirmpassowrd] = useState('')
+  const [password, setoldPassword] = useState('')
+  const [new_password, setnewpassword] = useState('')
+  const [confirm_password, setconfirm_password] = useState('')
   const [oldpasswwordshow, setoldpasswwordshow] = useState(false)
   const [newpasswwordshow, setnewpasswwordshow] = useState(false)
   const [confirmpasswwordshow, setconfirmpasswwordshow] = useState(false)
   const [IsPasswordMatch, setIsPasswordMatch] = useState(true)
+  const token = useSelector(state => state.Jwt_reducer.token)
+  console.log(token)
 
   // close message box
   const CloseMessageboxFunc = () => {
-    setCloseMessagebox(!CloseMessagebox)
+
   }
 
   // oldpasswordChange
@@ -32,14 +35,69 @@ export default function UserSettings() {
     setnewpassword(e.target.value)
   }
 
-  // ConfirmpassowrdChange
-  const confirmpassowrdChange = (e) => {
-    setconfirmpassowrd(e.target.value)
-    if (newpassword != confirmpassowrd) {
+  // confirm_passwordChange
+  const confirm_passwordChange = (e) => {
+    setconfirm_password(e.target.value)
+    if (new_password != confirm_password) {
       setIsPasswordMatch(!IsPasswordMatch)
     }
 
   }
+
+  // Change Password Function
+  const PasswordChangeFunc = async () => {
+    await fetch('http://localhost:8000/auth/api/Change/password', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token.access}`,
+        'Content-type': "application/json"
+
+      },
+
+      body: JSON.stringify({
+        password, new_password, confirm_password
+      })
+    })
+      .then(async (res) => {
+
+        const data = await res.json();
+        const show_message = document.getElementById('message')
+        const Success = () => {
+          setconfirm_password('')
+          setnewpassword('')
+          setoldPassword('')
+          setmessage(Object.values(data)[0]);
+          show_message.style.display = 'flex';
+          show_message.classList.add('text-green-700')
+          show_message.classList.add('bg-green-200')
+          setTimeout(() => {
+            show_message.style.display = 'none'
+            show_message.classList.remove('text-green-700')
+            show_message.classList.remove('bg-green-200')
+
+          }, 5000);
+        }
+        const Error = () => {
+          setmessage(Object.values(data)[0]);
+          show_message.style.display = 'flex'
+          show_message.classList.add('text-red-700')
+          show_message.classList.add('bg-red-200')
+          // setCloseMessagebox(!CloseMessagebox)
+          setTimeout(() => {
+            show_message.style.display = 'none'
+            show_message.classList.remove('text-red-700')
+            show_message.classList.remove('bg-red-200')
+
+          }, 5000);
+        }
+        res.status === 200 ? Success() : Error();
+
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
   const Islogdin = useSelector((state) => state.Sign_in_reducer.IsLogdin);
   console.log(Islogdin)
   const navigate = useNavigate()
@@ -66,13 +124,22 @@ export default function UserSettings() {
           <h3 className='password-text-header text-xl'>Change Password</h3>
         </aside>
         <main className='bg-white rounded-md md:w-[80%] md:mr-10 my-2'>
-          <form className='change-password form mx-5'>
+          <form className='change-password form mx-5 pt-3' onSubmit={(e) => {
+            e.preventDefault();
+            PasswordChangeFunc();
+
+          }}>
+            <div id="message" className={`hidden messages  items-center py-2 px-2 text-[13px]  rounded-lg`}>
+              <span className='message w-full '>{message}</span>
+              {/* <IoIosCloseCircleOutline fontSize={'25px'} className='cursor-pointer' onClick={CloseMessageboxFunc} /> */}
+            </div>
             <div className='larger-screen lg:flex lg:space-x-3 py-2 '>
+
               {/*  new password */}
               <div className='my-2 lg:w-[50%]'>
                 <label htmlFor='Password' className='text-sm font-bold '>New Password</label>
                 <div className='password mt-2 border flex  justify-between  items-center  border-gray-300 py-[2px] rounded-[4px]'>
-                  <input type={newpasswwordshow ? 'text' : 'password'} required value={newpassword} onChange={newpasswordChange} className=" px-2 py-[4px] bg-inherit outline-none  w-[15em]  placeholder-gray-700 
+                  <input type={newpasswwordshow ? 'text' : 'password'} required value={new_password} onChange={newpasswordChange} className=" px-2 py-[4px] bg-inherit outline-none  w-[15em]  placeholder-gray-700 
                         text-sm text-gray-700 border-none" placeholder='Enter your new password' />
                   <span className='text-sm mr-1 cursor-pointer' onClick={(e) => {
                     setnewpasswwordshow(!newpasswwordshow)
@@ -86,7 +153,7 @@ export default function UserSettings() {
               <div className='my-2 lg:w-[50%]'>
                 <label htmlFor='Password' className='text-sm font-bold text-gray-700'>Re-enter Password</label>
                 <div className='password mt-2  border flex  justify-between  items-center  border-gray-300 py-[2px] rounded-[4px]'>
-                  <input type={confirmpasswwordshow ? 'text' : 'password'} required value={confirmpassowrd} onChange={confirmpassowrdChange} className=" px-2 py-[4px] bg-inherit outline-none  w-[15em]  placeholder-gray-700 
+                  <input type={confirmpasswwordshow ? 'text' : 'password'} required value={confirm_password} onChange={confirm_passwordChange} className=" px-2 py-[4px] bg-inherit outline-none  w-[15em]  placeholder-gray-700 
                         text-sm text-gray-700 border-none" placeholder='Re-enter your Password' />
                   <span className='text-sm mr-1 cursor-pointer' onClick={(e) => {
                     setconfirmpasswwordshow(!confirmpasswwordshow)
@@ -101,7 +168,7 @@ export default function UserSettings() {
             <div className='my-2 lg:w-[50%]'>
               <label htmlFor='Password' className='text-sm font-bold'>Old Password</label>
               <div className='password mt-2 border flex  justify-between  items-center  border-gray-300 py-[2px] rounded-[4px]'>
-                <input type={oldpasswwordshow ? 'text' : 'password'} required value={oldPassword} onChange={oldpasswordChange} className=" px-2 py-[4px] bg-inherit outline-none  w-[15em]  placeholder-gray-700 
+                <input type={oldpasswwordshow ? 'text' : 'password'} required value={password} onChange={oldpasswordChange} className=" px-2 py-[4px] bg-inherit outline-none  w-[15em]  placeholder-gray-700 
                         text-sm text-gray-700 border-none" placeholder='Enter your old Password' />
                 <span className='text-sm mr-1 cursor-pointer' onClick={(e) => {
                   setoldpasswwordshow(!oldpasswwordshow)

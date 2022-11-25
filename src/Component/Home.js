@@ -9,10 +9,14 @@ import ChangePassword from '../settings/User/ChangePassword'
 import ShippingAddress from '../shop/ShippingAddress'
 import HomeSlider from './HomeSlider'
 import Header_Category_list from './Header_Category_list'
+import { Helmet } from 'react-helmet'
 
 function Home() {
   return (
     <Fragment>
+      <Helmet>
+        <title> Taj Jwellery | Home</title>
+      </Helmet>
       <header className='headers'>
         <Navbar />
         <Header_Category_list />

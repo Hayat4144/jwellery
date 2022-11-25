@@ -5,6 +5,7 @@ import ChangeEmail from '../User/ChangeEmail'
 import ChangePassword from '../User/ChangePassword'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import {Helmet} from 'react-helmet'
 
 export default function UserSettings() {
   const [CloseMessagebox, setCloseMessagebox] = useState(true)
@@ -51,6 +52,11 @@ export default function UserSettings() {
   }, [])
   return (
     <Fragment>
+      <Helmet>
+        <title>
+          Taj Jwellery | Settings
+        </title>
+      </Helmet>
       <header className='settings-header'>
         <Navbar />
       </header>

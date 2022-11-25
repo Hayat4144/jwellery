@@ -4,6 +4,7 @@ import { BiPlus } from 'react-icons/bi'
 import { AiOutlineMinus } from 'react-icons/ai'
 import { useDispatch, useSelector } from 'react-redux'
 import Navbar from '../Component/Navbar'
+import { Helmet } from 'react-helmet'
 
 export default function Cart() {
 
@@ -65,6 +66,9 @@ export default function Cart() {
     }
     return (
         <Fragment>
+            <Helmet>
+                <title>Taj Jwellery | Cart</title>
+            </Helmet>
             <Navbar />
             {
                 Cartdata.length == 0 ? <Fragment>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -6,6 +6,7 @@ import { Store_Jwt_Succes } from '../Context/action/Token_Action'
 import jwtDecode from 'jwt-decode'
 import { User_Details } from '../Context/action/User_Action'
 import { IoIosCloseCircleOutline } from 'react-icons/io'
+import { Helmet } from 'react-helmet'
 
 export default function Signin() {
     const [email, setemail] = useState('')
@@ -105,68 +106,74 @@ export default function Signin() {
 
 
     return (
-        <div className='container mx-auto'>
-            <div id="message" className=" md:w-[27%] hidden items-center space-x-3 py-3 my-4 mx-auto px-2 text-sm rounded-lg " role="alert">
-                <span className='w-full'>{message} </span><IoIosCloseCircleOutline className='text-[20px] cursor-pointer' />
-            </div>
-            <div className='my-5 text-center header-text'>
-                <h2 className='text-2xl font-bold logo'>Taj Jwellery</h2>
-            </div>
-            <div className='text-center page-text mb-5'>
-                <h3 className='mx-4 py-1 text-3xl mt-3 font-[1000]'>Sign in to your account</h3>
-            </div>
+        <Fragment>
+            <Helmet>
+                <title>Taj Jwellery | Sign in </title>
+            </Helmet>
+            <div className='container mx-auto'>
+                <div id="message" className=" md:w-[27%] hidden items-center space-x-3 py-3 my-4 mx-auto px-2 text-sm rounded-lg " role="alert">
+                    <span className='w-full'>{message} </span><IoIosCloseCircleOutline className='text-[20px] cursor-pointer' />
+                </div>
+                <div className='my-5 text-center header-text'>
+                    <h2 className='text-2xl font-bold logo'>Taj Jwellery</h2>
+                </div>
+                <div className='text-center page-text mb-5'>
+                    <h3 className='mx-4 py-1 text-3xl mt-3 font-[1000]'>Sign in to your account</h3>
+                </div>
 
-            {/* input field */}
-            <form onSubmit={(e) => {
-                e.preventDefault();
-                SigninFunc()
-            }}>
-                <div className='sm:mx-auto sm:w-[50%] mt-4 xl:mx-auto xl:w-[30%]  lg:mx-auto lg:w-[25%] signin-form border md:w-[50%] md:m-auto border-gray-300 shadow-lg rounded-md bg-white mx-3 mb-2'>
+                {/* input field */}
+                <form onSubmit={(e) => {
+                    e.preventDefault();
+                    SigninFunc()
+                }}>
+                    <div className='sm:mx-auto sm:w-[50%] mt-4 xl:mx-auto xl:w-[30%]  lg:mx-auto lg:w-[25%] signin-form border md:w-[50%] md:m-auto border-gray-300 shadow-lg rounded-md bg-white mx-3 mb-2'>
 
-                    <div className='mx-4 my-5 email-field '>
-                        <label htmlFor='email-input' className='text-sm font-medium text-gray-700'>Email</label>
-                        <div className='email-input border border-gray-300 rounded-md my-2 py-[2px]'>
-                            <input type={'email'} placeholder="Enter you email" value={email} onChange={EmailChange} required className='active:border-indigo-600 bg-inherit focus:border w-[18.8em] px-2 py-[4px] outline-none text-sm text-gray-700 border-none' />
+                        <div className='mx-4 my-5 email-field '>
+                            <label htmlFor='email-input' className='text-sm font-medium text-gray-700'>Email</label>
+                            <div className='email-input border border-gray-300 rounded-md my-2 py-[2px]'>
+                                <input type={'email'} placeholder="Enter you email" value={email} onChange={EmailChange} required className='active:border-indigo-600 bg-inherit focus:border w-[18.8em] px-2 py-[4px] outline-none text-sm text-gray-700 border-none' />
+                            </div>
+
+                        </div>
+                        {/* password field */}
+                        <div className='mx-4 mb-8 password-field'>
+                            <label htmlFor='password-input' className='text-sm font-medium text-gray-700'>password</label>
+                            <div className='password-input border justify-between border-gray-300 flex items-center  rounded-md my-2 py-[2px]'>
+                                <input type={showPassword ? 'text' : 'password'} value={password} onChange={PasswordChange} placeholder="Enter you password" required className='bg-inherit w-[18em] px-2 py-[4px] outline-none text-sm text-gray-700 border-none' />
+                                <span className='text-sm mr-1 cursor-pointer' onClick={(e) => {
+                                    setshowpassword(!showPassword)
+                                }}>{showPassword ? ' hide' : 'show'}</span>
+                            </div>
+
+                            <div className='float-right mb-4 forget-password'>
+                                <span className='text-sm text-indigo-600 cursor-pointer forget-password-link hover:text-indigo-700 hover:underline'>Forget your password?</span>
+                            </div>
                         </div>
 
-                    </div>
-                    {/* password field */}
-                    <div className='mx-4 mb-8 password-field'>
-                        <label htmlFor='password-input' className='text-sm font-medium text-gray-700'>password</label>
-                        <div className='password-input border justify-between border-gray-300 flex items-center  rounded-md my-2 py-[2px]'>
-                            <input type={showPassword ? 'text' : 'password'} value={password} onChange={PasswordChange} placeholder="Enter you password" required className='bg-inherit w-[18em] px-2 py-[4px] outline-none text-sm text-gray-700 border-none' />
-                            <span className='text-sm mr-1 cursor-pointer' onClick={(e) => {
-                                setshowpassword(!showPassword)
-                            }}>{showPassword ? ' hide' : 'show'}</span>
-                        </div>
-
-                        <div className='float-right mb-4 forget-password'>
-                            <span className='text-sm text-indigo-600 cursor-pointer forget-password-link hover:text-indigo-700 hover:underline'>Forget your password?</span>
+                        <div className='sumbit-btn mx-2 lg:mx-4'>
+                            {!isLoading ? <button type='submit' className='w-full h-8 px-6 mb-8 text-center text-white outline-none text-bold bg-indigo-800 rounded-md hover:bg-indigo-700'>Sign in</button> : <button type="button" className="inline-flex items-center justify-center py-2 mb-5 leading-4 text-sm shadow rounded-md text-white bg-indigo-800 hover:bg-indigo-900 w-full text-center transition ease-in-out duration-150 cursor-not-allowed" disabled="">
+                                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle className="pacity-25 text-white" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                Processing ...
+                            </button>
+                            }
                         </div>
                     </div>
+                </form>
 
-                    <div className='sumbit-btn mx-2 lg:mx-4'>
-                        {!isLoading ? <button type='submit' className='w-full h-8 px-6 mb-8 text-center text-white outline-none text-bold bg-indigo-800 rounded-md hover:bg-indigo-700'>Sign in</button> : <button type="button" className="inline-flex items-center justify-center py-2 mb-5 leading-4 text-sm shadow rounded-md text-white bg-indigo-800 hover:bg-indigo-900 w-full text-center transition ease-in-out duration-150 cursor-not-allowed" disabled="">
-                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle className="pacity-25 text-white" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
-                            Processing ...
-                        </button>
-                        }
+                <div className='create_new_account sm:mx-auto sm:w-[50%] mt-4 xl:mx-auto xl:w-[30%] lg:mx-auto lg:w-[25%] text-center mx-5'>
+                    <div className='m-8 border-b border-b-light-white'>
+                        <span className='text-sm  dont-account-text  '>Don't have an account ?</span>
                     </div>
-                </div>
-            </form>
+                    <div className='new_accoutn_btn'>
+                        <button className='w-full bg-indigo-800 py-1 px-6 rounded-md mb-2 text-white hover:bg-indigo-900'><Link to="/V2/auth/sign_up">Create new account</Link></button>
 
-            <div className='create_new_account sm:mx-auto sm:w-[50%] mt-4 xl:mx-auto xl:w-[30%] lg:mx-auto lg:w-[25%] text-center mx-5'>
-                <div className='m-8 border-b border-b-light-white'>
-                    <span className='text-sm  dont-account-text  '>Don't have an account ?</span>
-                </div>
-                <div className='new_accoutn_btn'>
-                    <button className='w-full bg-indigo-800 py-1 px-6 rounded-md mb-2 text-white hover:bg-indigo-900'><Link to="/V2/auth/sign_up">Create new account</Link></button>
-
+                    </div>
                 </div>
             </div>
-        </div>
+        </Fragment>
+
     )
 }

@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react'
+import { Helmet } from 'react-helmet'
 import { IoIosCloseCircleOutline } from 'react-icons/io'
 
 export default function ForgetPassword() {
@@ -53,6 +54,9 @@ export default function ForgetPassword() {
 
     return (
         <Fragment>
+            <Helmet>
+                <title>Taj Jwellery | Forget Password</title>
+            </Helmet>
             <div className='mb-10 mx-2'>
                 <div className='mt-5 text-center header-text'>
                     <h1 className='text-4xl font-bold'>Taj jwellery</h1>
